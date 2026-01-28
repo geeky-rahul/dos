@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "221034136281",
+    "project_id": "dos-app-85e53",
+    "storage_bucket": "dos-app-85e53.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221034136281:android:4c267c2c4099218894f4c8",
+        "android_client_info": {
+          "package_name": "com.dos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221034136281-lkpnrglt56qmoeiav9uqvaccg09r2bpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg40XJE7Eo1pOzSy9kwlAjesqbkdWJTko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221034136281-lkpnrglt56qmoeiav9uqvaccg09r2bpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

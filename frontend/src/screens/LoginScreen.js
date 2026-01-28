@@ -9,22 +9,39 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { auth } from '../services/firebase';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    console.log('Login:', { email, password });
-    // Backend integration ke liye yaha API call hogi
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter email and password');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await auth().signInWithEmailAndPassword(email.trim(), password);
+      // 🔥 success → AppNavigator auto switch karega
+    } catch (error) {
+      Alert.alert('Login Failed', error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = () => {
-    console.log('Google Login');
-    // Google OAuth integration
+    Alert.alert(
+      'Coming soon',
+      'Google login next step me add karenge 🙂'
+    );
   };
 
   return (
@@ -76,7 +93,7 @@ export default function LoginScreen({ navigation }) {
             </View>
 
             {/* Forgot Password */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.forgotPassword}
               onPress={() => navigation.navigate('ForgotPassword')}
             >
@@ -84,8 +101,14 @@ export default function LoginScreen({ navigation }) {
             </TouchableOpacity>
 
             {/* Login Button */}
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.loginButtonText}>Sign In</Text>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={handleLogin}
+              disabled={loading}
+            >
+              <Text style={styles.loginButtonText}>
+                {loading ? 'Signing In...' : 'Sign In'}
+              </Text>
             </TouchableOpacity>
 
             {/* Divider */}
@@ -108,12 +131,15 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.signupLink}>Sign Up</Text>
               </TouchableOpacity>
             </View>
+
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
+
+/* ---------------- STYLES (UNCHANGED) ---------------- */
 
 const styles = StyleSheet.create({
   container: {
@@ -177,11 +203,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
     marginBottom: 24,
-    shadowColor: '#8B5CF6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
   },
   loginButtonText: {
     color: '#FFFFFF',

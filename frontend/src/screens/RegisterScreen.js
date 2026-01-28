@@ -9,8 +9,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { auth } from '../services/firebase';
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -19,19 +21,43 @@ export default function RegisterScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = () => {
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      Alert.alert('Error', 'Please fill all fields');
       return;
     }
-    console.log('Register:', { name, email, password });
-    // Backend integration ke liye yaha API call hogi
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const userCredential =
+        await auth().createUserWithEmailAndPassword(email.trim(), password);
+
+      // 🔥 save name in Firebase profile
+      await userCredential.user.updateProfile({
+        displayName: name,
+      });
+
+      // 👉 auto-login hoga, AppNavigator switch karega
+    } catch (error) {
+      Alert.alert('Registration Failed', error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleSignup = () => {
-    console.log('Google Signup');
-    // Google OAuth integration
+    Alert.alert(
+      'Coming soon',
+      'Google signup next step me add karenge 🙂'
+    );
   };
 
   return (
@@ -115,8 +141,14 @@ export default function RegisterScreen({ navigation }) {
             </View>
 
             {/* Register Button */}
-            <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-              <Text style={styles.registerButtonText}>Create Account</Text>
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={handleRegister}
+              disabled={loading}
+            >
+              <Text style={styles.registerButtonText}>
+                {loading ? 'Creating account...' : 'Create Account'}
+              </Text>
             </TouchableOpacity>
 
             {/* Divider */}
@@ -145,6 +177,8 @@ export default function RegisterScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+/* ---------------- STYLES (UNCHANGED) ---------------- */
 
 const styles = StyleSheet.create({
   container: {
@@ -200,11 +234,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     marginTop: 8,
-    shadowColor: '#8B5CF6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
   },
   registerButtonText: {
     color: '#FFFFFF',

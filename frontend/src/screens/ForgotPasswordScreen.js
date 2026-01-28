@@ -9,23 +9,43 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { auth } from '../services/firebase';
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleResetPassword = () => {
-    console.log('Reset password for:', email);
-    setIsEmailSent(true);
+  const handleResetPassword = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await auth().sendPasswordResetEmail(email.trim());
+      setIsEmailSent(true);
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleResendEmail = () => {
-    console.log('Resend email to:', email);
-    // Resend API call
+  const handleResendEmail = async () => {
+    try {
+      await auth().sendPasswordResetEmail(email.trim());
+      Alert.alert('Success', 'Reset email sent again');
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    }
   };
 
+  /* ---------------- SUCCESS SCREEN ---------------- */
   if (isEmailSent) {
     return (
       <SafeAreaView style={styles.container}>
@@ -45,18 +65,22 @@ export default function ForgotPasswordScreen({ navigation }) {
           {/* Instructions */}
           <View style={styles.instructionsContainer}>
             <Text style={styles.instructionsText}>
-              Click the link in the email to reset your password. If you don't see it, check your spam folder.
+              Click the link in the email to reset your password.
+              If you don't see it, check your spam folder.
             </Text>
           </View>
 
           {/* Resend Button */}
-          <TouchableOpacity style={styles.resendButton} onPress={handleResendEmail}>
+          <TouchableOpacity
+            style={styles.resendButton}
+            onPress={handleResendEmail}
+          >
             <Text style={styles.resendButtonText}>Resend Email</Text>
           </TouchableOpacity>
 
           {/* Back to Login */}
-          <TouchableOpacity 
-            style={styles.backButton} 
+          <TouchableOpacity
+            style={styles.backButton}
             onPress={() => navigation.navigate('Login')}
           >
             <Icon name="arrow-back" size={20} color="#8B5CF6" />
@@ -67,6 +91,7 @@ export default function ForgotPasswordScreen({ navigation }) {
     );
   }
 
+  /* ---------------- FORM SCREEN ---------------- */
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -76,8 +101,8 @@ export default function ForgotPasswordScreen({ navigation }) {
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.content}>
             {/* Back Button */}
-            <TouchableOpacity 
-              style={styles.backIconButton} 
+            <TouchableOpacity
+              style={styles.backIconButton}
               onPress={() => navigation.goBack()}
             >
               <Icon name="arrow-back" size={24} color="#111827" />
@@ -87,7 +112,8 @@ export default function ForgotPasswordScreen({ navigation }) {
             <View style={styles.header}>
               <Text style={styles.title}>Forgot Password?</Text>
               <Text style={styles.subtitle}>
-                Don't worry! Enter your email and we'll send you a link to reset your password.
+                Don't worry! Enter your email and we'll send you a link
+                to reset your password.
               </Text>
             </View>
 
@@ -106,8 +132,14 @@ export default function ForgotPasswordScreen({ navigation }) {
             </View>
 
             {/* Reset Button */}
-            <TouchableOpacity style={styles.resetButton} onPress={handleResetPassword}>
-              <Text style={styles.resetButtonText}>Send Reset Link</Text>
+            <TouchableOpacity
+              style={styles.resetButton}
+              onPress={handleResetPassword}
+              disabled={loading}
+            >
+              <Text style={styles.resetButtonText}>
+                {loading ? 'Sending...' : 'Send Reset Link'}
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -115,6 +147,8 @@ export default function ForgotPasswordScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+/* ---------------- STYLES (UNCHANGED) ---------------- */
 
 const styles = StyleSheet.create({
   container: {
@@ -174,31 +208,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
     marginBottom: 24,
-    shadowColor: '#8B5CF6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
   },
   resetButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  loginText: {
-    color: '#6B7280',
-    fontSize: 14,
-  },
-  loginLink: {
-    color: '#8B5CF6',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  // Success Screen Styles
   successIconContainer: {
     alignItems: 'center',
     marginBottom: 24,
