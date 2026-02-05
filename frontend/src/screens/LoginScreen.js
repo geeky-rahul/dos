@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,9 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { auth } from '../services/firebase';
+
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -20,6 +22,7 @@ export default function LoginScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  /* ================= EMAIL LOGIN ================= */
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter email and password');
@@ -28,8 +31,10 @@ export default function LoginScreen({ navigation }) {
 
     try {
       setLoading(true);
-      await auth().signInWithEmailAndPassword(email.trim(), password);
-      // 🔥 success → AppNavigator auto switch karega
+      await auth().signInWithEmailAndPassword(
+        email.trim(),
+        password
+      );
     } catch (error) {
       Alert.alert('Login Failed', error.message);
     } finally {
@@ -37,11 +42,40 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  const handleGoogleLogin = () => {
-    Alert.alert(
-      'Coming soon',
-      'Google login next step me add karenge 🙂'
-    );
+  /* ================= GOOGLE LOGIN ================= */
+  const handleGoogleLogin = async () => {
+    try {
+      console.log('🔵 Google login started');
+
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+
+      const userInfo = await GoogleSignin.signIn();
+
+      console.log(
+        '🟢 Google userInfo:',
+        JSON.stringify(userInfo, null, 2)
+      );
+
+      const idToken = userInfo?.idToken;
+      console.log('🟡 idToken:', idToken);
+
+      if (!idToken) {
+        Alert.alert('Error', 'No idToken received from Google');
+        return;
+      }
+
+      const googleCredential =
+        auth.GoogleAuthProvider.credential(idToken);
+
+      await auth().signInWithCredential(googleCredential);
+
+      console.log('✅ Google login success');
+    } catch (error) {
+      console.log('❌ Google Sign-In Error:', error);
+      Alert.alert('Google login failed', error.message);
+    }
   };
 
   return (
@@ -52,38 +86,39 @@ export default function LoginScreen({ navigation }) {
       >
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.content}>
+
             {/* Header */}
             <View style={styles.header}>
               <Text style={styles.title}>DOS</Text>
               <Text style={styles.subtitle}>Sign in to continue</Text>
             </View>
 
-            {/* Email Input */}
+            {/* Email */}
             <View style={styles.inputContainer}>
-              <Icon name="mail-outline" size={20} color="#9CA3AF" style={styles.icon} />
+              <Icon name="mail-outline" size={20} color="#9CA3AF" />
               <TextInput
                 style={styles.input}
                 placeholder="Email"
-                placeholderTextColor="#9CA3AF"
                 value={email}
                 onChangeText={setEmail}
-                keyboardType="email-address"
                 autoCapitalize="none"
+                keyboardType="email-address"
               />
             </View>
 
-            {/* Password Input */}
+            {/* Password */}
             <View style={styles.inputContainer}>
-              <Icon name="lock-closed-outline" size={20} color="#9CA3AF" style={styles.icon} />
+              <Icon name="lock-closed-outline" size={20} color="#9CA3AF" />
               <TextInput
                 style={styles.input}
                 placeholder="Password"
-                placeholderTextColor="#9CA3AF"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
               />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+              >
                 <Icon
                   name={showPassword ? 'eye-outline' : 'eye-off-outline'}
                   size={20}
@@ -92,15 +127,17 @@ export default function LoginScreen({ navigation }) {
               </TouchableOpacity>
             </View>
 
-            {/* Forgot Password */}
+            {/* Forgot */}
             <TouchableOpacity
               style={styles.forgotPassword}
               onPress={() => navigation.navigate('ForgotPassword')}
             >
-              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+              <Text style={styles.forgotPasswordText}>
+                Forgot Password?
+              </Text>
             </TouchableOpacity>
 
-            {/* Login Button */}
+            {/* Login */}
             <TouchableOpacity
               style={styles.loginButton}
               onPress={handleLogin}
@@ -118,16 +155,23 @@ export default function LoginScreen({ navigation }) {
               <View style={styles.dividerLine} />
             </View>
 
-            {/* Google Login */}
-            <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+            {/* Google */}
+            <TouchableOpacity
+              style={styles.googleButton}
+              onPress={handleGoogleLogin}
+            >
               <Icon name="logo-google" size={20} color="#DB4437" />
-              <Text style={styles.googleButtonText}>Continue with Google</Text>
+              <Text style={styles.googleButtonText}>
+                Continue with Google
+              </Text>
             </TouchableOpacity>
 
-            {/* Sign Up Link */}
+            {/* Signup */}
             <View style={styles.signupContainer}>
-              <Text style={styles.signupText}>Don't have an account? </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+              <Text>Don't have an account? </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Register')}
+              >
                 <Text style={styles.signupLink}>Sign Up</Text>
               </TouchableOpacity>
             </View>
@@ -139,36 +183,16 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
-/* ---------------- STYLES (UNCHANGED) ---------------- */
+/* ---------------- STYLES ---------------- */
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9FAFB',
-  },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollView: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  content: {
-    padding: 24,
-  },
-  header: {
-    marginBottom: 32,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  container: { flex: 1, backgroundColor: '#F9FAFB' },
+  keyboardView: { flex: 1 },
+  scrollView: { flexGrow: 1, justifyContent: 'center' },
+  content: { padding: 24 },
+  header: { marginBottom: 32 },
+  title: { fontSize: 32, fontWeight: 'bold', color: '#111827' },
+  subtitle: { fontSize: 16, color: '#6B7280' },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -180,18 +204,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
-  icon: {
-    marginRight: 12,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: '#111827',
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginBottom: 24,
-  },
+  input: { flex: 1, fontSize: 16, marginLeft: 12 },
+  forgotPassword: { alignSelf: 'flex-end', marginBottom: 24 },
   forgotPasswordText: {
     color: '#8B5CF6',
     fontSize: 14,
@@ -204,54 +218,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  loginButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  loginButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: 'bold' },
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
   },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#E5E7EB',
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    color: '#6B7280',
-    fontSize: 14,
-  },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#E5E7EB' },
+  dividerText: { marginHorizontal: 16, color: '#6B7280' },
   googleButton: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingVertical: 14,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#E5E7EB',
+    paddingVertical: 14,
+    borderRadius: 12,
     marginBottom: 24,
   },
   googleButtonText: {
     marginLeft: 12,
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
   },
-  signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  signupText: {
-    color: '#6B7280',
-    fontSize: 14,
-  },
-  signupLink: {
-    color: '#8B5CF6',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
+  signupContainer: { flexDirection: 'row', justifyContent: 'center' },
+  signupLink: { color: '#8B5CF6', fontWeight: 'bold' },
 });

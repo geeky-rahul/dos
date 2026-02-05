@@ -7,95 +7,218 @@ import {
   TouchableOpacity,
   Linking,
   TextInput,
+  Animated,
+  Dimensions,
+  RefreshControl,
 } from 'react-native';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
+
+const { width } = Dimensions.get('window');
+
+/* ================= SHOP CARD COMPONENT ================= */
+
+function ShopCard({ item, index, navigation, query }) {
+  const cardAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(cardAnim, {
+      toValue: 1,
+      duration: 400,
+      delay: index * 100,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  const hasOffer = item.offer && item.offer > 0;
+
+  const matchingProducts = query
+    ? item.products?.filter(p =>
+        p.name?.toLowerCase().includes(query.toLowerCase())
+      )
+    : [];
+
+  return (
+    <Animated.View
+      style={{
+        opacity: cardAnim,
+        transform: [
+          {
+            translateY: cardAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [40, 0],
+            }),
+          },
+        ],
+      }}
+    >
+      <TouchableOpacity
+        style={styles.shopCard}
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('ShopDetail', { shop: item })}
+      >
+        {hasOffer && (
+          <View style={styles.offerBadge}>
+            <Text style={styles.offerText}>{item.offer}% OFF</Text>
+          </View>
+        )}
+
+        <View style={styles.shopImagePlaceholder}>
+          <Text style={styles.shopImageEmoji}>🏪</Text>
+        </View>
+
+        <View style={styles.shopInfo}>
+          <Text style={styles.shopName} numberOfLines={1}>
+            {item.name}
+          </Text>
+
+          <View style={styles.metaRow}>
+            <View style={styles.ratingBox}>
+              <Text style={styles.ratingText}>⭐ {item.rating || '4.5'}</Text>
+            </View>
+            <Text style={styles.separator}>•</Text>
+            <Text style={styles.locationText} numberOfLines={1}>
+              {item.area}, {item.city}
+            </Text>
+          </View>
+
+          <View style={styles.statusRow}>
+            <View style={styles.distanceTag}>
+              <Text style={styles.distanceText}>📍 2.3 km</Text>
+            </View>
+            <View style={[styles.statusTag, item.isOpen && styles.openTag]}>
+              <View style={[styles.statusDot, item.isOpen && styles.openDot]} />
+              <Text style={[styles.statusText, item.isOpen && styles.openText]}>
+                {item.isOpen ? 'Open' : 'Closed'}
+              </Text>
+            </View>
+          </View>
+
+          {matchingProducts.length > 0 && (
+            <View style={styles.matchContainer}>
+              <Text style={styles.matchIcon}>✓</Text>
+              <Text style={styles.matchText}>
+                {matchingProducts.length} matching product
+                {matchingProducts.length > 1 ? 's' : ''}
+              </Text>
+            </View>
+          )}
+
+          {item.products && item.products.length > 0 && !query && (
+            <Text style={styles.productsPreview} numberOfLines={1}>
+              {item.products.slice(0, 3).map((p) => p.name).join(' • ')}
+            </Text>
+          )}
+        </View>
+
+        <TouchableOpacity
+          style={styles.mapButton}
+          onPress={() => item.mapUrl && Linking.openURL(item.mapUrl)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.mapIcon}>📍</Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
+
+/* ================= HOME SCREEN ================= */
 
 export default function HomeScreen({ navigation }) {
   const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [query, setQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  // 📡 FETCH SHOPS FROM BACKEND
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
+
+  const categories = ['All', 'Electronics', 'Clothing', 'Food', 'Hardware', 'Books'];
+
   useEffect(() => {
     fetchShops();
+
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
   }, []);
 
   const fetchShops = async () => {
     try {
       const res = await fetch('http://10.0.2.2:5000/api/shops');
       const data = await res.json();
-
-      // ✅ backend response safety
       setShops(data.shops || []);
-    } catch (err) {
-      console.log('Error fetching shops:', err);
+    } catch (e) {
+      console.log(e);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
-  const openMaps = (url) => {
-    if (url) {
-      Linking.openURL(url);
-    }
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchShops();
   };
 
-  // 🔍 SEARCH (SHOP NAME + PRODUCT NAME)
-  const filteredShops = shops.filter((shop) => {
-    if (query.trim() === '') return true;
+  const filteredShops = shops.filter(shop => {
+    if (activeCategory !== 'All' && shop.category !== activeCategory) return false;
+    if (!query.trim()) return true;
 
     const q = query.toLowerCase();
-
-    const shopMatch = shop.name?.toLowerCase().includes(q);
-
-    const productMatch = shop.products?.some((product) =>
-      product.name?.toLowerCase().includes(q)
+    return (
+      shop.name?.toLowerCase().includes(q) ||
+      shop.products?.some(p => p.name?.toLowerCase().includes(q))
     );
-
-    return shopMatch || productMatch;
   });
 
-  const renderShop = ({ item }) => (
+  const renderShop = ({ item, index }) => (
+    <ShopCard
+      item={item}
+      index={index}
+      navigation={navigation}
+      query={query}
+    />
+  );
+
+  const renderCategoryChip = ({ item }) => (
     <TouchableOpacity
-      style={styles.card}
-      activeOpacity={0.85}
-      onPress={() => navigation.navigate('ShopDetail', { shop: item })}
+      style={[
+        styles.categoryChip,
+        activeCategory === item && styles.activeCategory,
+      ]}
+      onPress={() => setActiveCategory(item)}
+      activeOpacity={0.7}
     >
-      <View style={{ flex: 1 }}>
-        <Text style={styles.name}>{item.name}</Text>
-
-        <Text style={styles.sub}>
-          ⭐ {item.rating} • {item.area}, {item.city}
-        </Text>
-
-        {/* PRODUCT MATCH INFO */}
-        {query &&
-          item.products?.some((p) =>
-            p.name?.toLowerCase().includes(query.toLowerCase())
-          ) && (
-            <Text style={styles.matchText}>
-              Matching product available
-            </Text>
-          )}
-      </View>
-
-      <TouchableOpacity
-        style={styles.mapBtn}
-        onPress={() => openMaps(item.mapUrl)}
+      <Text
+        style={[
+          styles.categoryText,
+          activeCategory === item && styles.activeCategoryText,
+        ]}
       >
-        <Text style={styles.mapText}>📍 Maps</Text>
-      </TouchableOpacity>
+        {item}
+      </Text>
     </TouchableOpacity>
   );
 
-  // ⏳ LOADING STATE
   if (loading) {
     return (
-      <View style={styles.loader}>
-        <Text>Loading shops...</Text>
+      <View style={styles.loaderContainer}>
+        <Text style={styles.loaderEmoji}>🏪</Text>
+        <Text style={styles.loaderText}>Finding shops near you...</Text>
       </View>
     );
   }
@@ -105,159 +228,562 @@ export default function HomeScreen({ navigation }) {
       <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
 
       {/* HEADER */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.headerTitle}>📍 Rental ▼</Text>
-          <Text style={styles.headerSub}>
-            Discover local shops around you
-          </Text>
+      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
+        <View style={styles.headerLeft}>
+          <Text style={styles.headerGreeting}>Hello! 👋</Text>
+          <TouchableOpacity style={styles.locationButton}>
+            <Text style={styles.locationIcon}>📍</Text>
+            <Text style={styles.locationName}>Faridabad</Text>
+            <Text style={styles.locationDropdown}>▼</Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity
-          style={styles.profileCircle}
+          style={styles.profileButton}
           onPress={() => navigation.navigate('Account')}
+          activeOpacity={0.8}
         >
-          <Text style={{ fontSize: 16 }}>👤</Text>
+          <View style={styles.profileCircle}>
+            <Text style={styles.profileEmoji}>👤</Text>
+          </View>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       {/* SEARCH */}
-      <View style={styles.searchWrapper}>
-        <TextInput
-          placeholder="Search shops or products"
-          placeholderTextColor="#999"
-          value={query}
-          onChangeText={setQuery}
-          style={styles.searchInput}
-        />
-      </View>
+      <Animated.View
+        style={[
+          styles.searchContainer,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideAnim }],
+          },
+        ]}
+      >
+        <View style={styles.searchWrapper}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <TextInput
+            placeholder="Search for shops or products..."
+            placeholderTextColor="#999"
+            value={query}
+            onChangeText={setQuery}
+            style={styles.searchInput}
+          />
+          {query.length > 0 && (
+            <TouchableOpacity onPress={() => setQuery('')} style={styles.clearButton}>
+              <Text style={styles.clearIcon}>✕</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </Animated.View>
 
-      {/* SHOP LIST */}
+      {/* CATEGORY */}
+      <Animated.View
+        style={[
+          styles.categoryContainer,
+          {
+            opacity: fadeAnim,
+          },
+        ]}
+      >
+        <FlatList
+          data={categories}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item}
+          renderItem={renderCategoryChip}
+          contentContainerStyle={styles.categoryList}
+        />
+      </Animated.View>
+
+      {/* SHOPS LIST */}
       <FlatList
         data={filteredShops}
-        keyExtractor={(item) => item._id}
+        keyExtractor={item => item._id}
         renderItem={renderShop}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={styles.listContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[COLORS.primary]}
+            tintColor={COLORS.primary}
+          />
+        }
         ListHeaderComponent={() => (
-          <Text style={styles.sectionTitle}>
-            {query ? `Results for "${query}"` : 'Shops near you'}
-          </Text>
+          <View style={styles.listHeader}>
+            <Text style={styles.sectionTitle}>
+              {query
+                ? `${filteredShops.length} results for "${query}"`
+                : activeCategory === 'All'
+                ? `${filteredShops.length} shops near you`
+                : `${filteredShops.length} ${activeCategory} shops`}
+            </Text>
+          </View>
+        )}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyEmoji}>🔍</Text>
+            <Text style={styles.emptyTitle}>No shops found</Text>
+            <Text style={styles.emptyText}>
+              Try adjusting your search or category filter
+            </Text>
+          </View>
         )}
       />
     </SafeAreaView>
   );
 }
 
+/* ================= STYLES ================= */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F8F9FA',
   },
 
-  loader: {
+  loaderContainer: {
     flex: 1,
+    backgroundColor: '#F8F9FA',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  loaderEmoji: {
+    fontSize: 48,
+    marginBottom: 12,
+  },
+
+  loaderText: {
+    fontSize: 16,
+    color: '#666',
+    fontWeight: '500',
   },
 
   /* HEADER */
   header: {
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+
+  headerLeft: {
+    flex: 1,
+  },
+
+  headerGreeting: {
+    color: '#FFF',
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 6,
+    opacity: 0.9,
   },
 
   headerTitle: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#FFF',
+    fontSize: 20,
     fontWeight: '700',
   },
 
-  headerSub: {
-    color: '#ffe0c7',
-    fontSize: 12,
-    marginTop: 4,
+  locationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+  },
+
+  locationIcon: {
+    fontSize: 14,
+    marginRight: 4,
+  },
+
+  locationName: {
+    color: '#FFF',
+    fontSize: 15,
+    fontWeight: '700',
+    marginRight: 4,
+  },
+
+  locationDropdown: {
+    color: '#FFF',
+    fontSize: 10,
+    opacity: 0.8,
+  },
+
+  profileButton: {
+    marginLeft: 12,
   },
 
   profileCircle: {
-    backgroundColor: '#fff',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    backgroundColor: '#FFF',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  /* SEARCH */
-  searchWrapper: {
-    marginHorizontal: 16,
-    marginTop: 10,
-    backgroundColor: '#fff',
-    paddingHorizontal: 14,
-    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     elevation: 3,
   },
 
-  searchInput: {
-    height: 46,
-    fontSize: 14,
-    color: '#000',
+  profileEmoji: {
+    fontSize: 20,
   },
 
-  /* SECTION TITLE */
-  sectionTitle: {
-    marginHorizontal: 16,
-    marginTop: 16,
-    marginBottom: 6,
+  /* SEARCH */
+  searchContainer: {
+    paddingHorizontal: 20,
+    marginTop: -20,
+    marginBottom: 16,
+    zIndex: 10,
+  },
+
+  searchWrapper: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    height: 52,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+
+  searchBox: {
+    backgroundColor: '#FFF',
+    marginHorizontal: 20,
+    marginTop: -20,
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    height: 52,
+    borderRadius: 16,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+
+  searchIcon: {
+    fontSize: 18,
+    marginRight: 12,
+  },
+
+  searchInput: {
+    flex: 1,
+    fontSize: 15,
+    color: '#000',
+    fontWeight: '500',
+  },
+
+  clearButton: {
+    padding: 4,
+  },
+
+  clearIcon: {
     fontSize: 16,
+    color: '#999',
+  },
+
+  /* CATEGORY FILTER */
+  categoryContainer: {
+    marginBottom: 8,
+  },
+
+  categoryList: {
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+  },
+
+  categoryChip: {
+    backgroundColor: '#FFF',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    borderWidth: 1.5,
+    borderColor: '#E5E5E5',
+  },
+
+  activeCategory: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+
+  categoryText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+  },
+
+  activeCategoryText: {
+    color: '#FFF',
+  },
+
+  /* LIST */
+  listContent: {
+    paddingBottom: 20,
+  },
+
+  listHeader: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 8,
+  },
+
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: '700',
-    color: '#222',
+    color: '#1A1A1A',
   },
 
   /* SHOP CARD */
-  card: {
-    backgroundColor: '#f2f2f2',
-    marginHorizontal: 16,
-    marginTop: 14,
-    padding: 14,
+  shopCard: {
+    backgroundColor: '#FFF',
+    marginHorizontal: 20,
+    marginTop: 12,
+    borderRadius: 16,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 3,
+    position: 'relative',
+  },
+
+  offerBadge: {
+    position: 'absolute',
+    top: -6,
+    right: 12,
+    backgroundColor: '#FF6B6B',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+    shadowColor: '#FF6B6B',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+    zIndex: 10,
+  },
+
+  offerText: {
+    color: '#FFF',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
+
+  shopImagePlaceholder: {
+    width: 72,
+    height: 72,
     borderRadius: 12,
+    backgroundColor: '#F0F0F0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  shopImageEmoji: {
+    fontSize: 32,
+  },
+
+  shopInfo: {
+    flex: 1,
+    paddingTop: 2,
+  },
+
+  shopName: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 6,
+  },
+
+  metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    marginBottom: 8,
   },
 
-  name: {
-    fontSize: 16,
-    fontWeight: '600',
+  ratingBox: {
+    backgroundColor: '#FFF9E6',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#FFE066',
   },
 
-  sub: {
-    marginTop: 4,
+  ratingText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#D4A800',
+  },
+
+  separator: {
+    marginHorizontal: 6,
+    color: '#CCC',
+    fontSize: 12,
+  },
+
+  locationText: {
     fontSize: 13,
+    color: '#666',
+    fontWeight: '500',
+    flex: 1,
+  },
+
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+
+  distanceTag: {
+    backgroundColor: '#F0F0F0',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+
+  distanceText: {
+    fontSize: 11,
+    fontWeight: '600',
     color: '#555',
   },
 
-  matchText: {
-    marginTop: 4,
-    fontSize: 12,
-    color: COLORS.primary,
-    fontWeight: '600',
-  },
-
-  mapBtn: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+  statusTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFE5E5',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 6,
   },
 
-  mapText: {
-    color: '#fff',
-    fontSize: 12,
+  openTag: {
+    backgroundColor: '#E6F7E6',
+  },
+
+  statusDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#FF4444',
+    marginRight: 4,
+  },
+
+  openDot: {
+    backgroundColor: '#22C55E',
+  },
+
+  statusText: {
+    fontSize: 11,
     fontWeight: '600',
+    color: '#FF4444',
+  },
+
+  openText: {
+    color: '#22C55E',
+  },
+
+  matchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    marginTop: 4,
+    alignSelf: 'flex-start',
+  },
+
+  matchIcon: {
+    fontSize: 12,
+    color: '#22C55E',
+    marginRight: 4,
+  },
+
+  matchText: {
+    fontSize: 12,
+    color: '#22C55E',
+    fontWeight: '700',
+  },
+
+  productsPreview: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 6,
+    fontStyle: 'italic',
+  },
+
+  mapButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 8,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+
+  mapIcon: {
+    fontSize: 18,
+  },
+
+  /* EMPTY STATE */
+  emptyContainer: {
+    alignItems: 'center',
+    paddingTop: 60,
+    paddingHorizontal: 40,
+  },
+
+  emptyEmoji: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 8,
+  },
+
+  emptyText: {
+    fontSize: 14,
+    color: '#999',
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });
