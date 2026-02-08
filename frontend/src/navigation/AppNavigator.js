@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, ActivityIndicator } from 'react-native';
 
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -8,6 +9,7 @@ import MainTabs from './MainTabs';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 
 import { auth } from '../services/firebase';
+import { COLORS } from '../constants/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +25,13 @@ export default function AppNavigator() {
     return unsubscribe;
   }, []);
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F8F9FA' }}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

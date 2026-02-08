@@ -7,7 +7,7 @@ export const shops = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=APX+Gift+Shop',
 
     // 👇 DETAIL DATA (HomeScreen ignore karega)
-    notice: '🎉 Flat 20% off on all gift items today!',
+    notice: 'Flat 20% off on all gift items today!',
     offers: [
       'Buy 1 Get 1 on photo frames',
       '₹100 off on orders above ₹999',
@@ -30,7 +30,7 @@ export const shops = [
     time: '25 mins',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Dimons+Shop',
 
-    notice: '🔥 Weekend sale – up to 15% off',
+    notice: 'Weekend sale – up to 15% off',
     offers: ['10% off on all items'],
     products: [
       { id: 'p1', name: 'Chair', price: '₹899' },
@@ -49,7 +49,7 @@ export const shops = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=APX+Gift+Shop',
 
     // 👇 DETAIL DATA (HomeScreen ignore karega)
-    notice: '🎉 Flat 20% off on all gift items today!',
+    notice: 'Flat 20% off on all gift items today!',
     offers: [
       'Buy 1 Get 1 on photo frames',
       '₹100 off on orders above ₹999',
@@ -72,7 +72,7 @@ export const shops = [
     time: '25 mins',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Dimons+Shop',
 
-    notice: '🔥 Weekend sale – up to 15% off',
+    notice: 'Weekend sale – up to 15% off',
     offers: ['10% off on all items'],
     products: [
       { id: 'p1', name: 'Chair', price: '₹899' },
@@ -91,7 +91,7 @@ export const shops = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=APX+Gift+Shop',
 
     // 👇 DETAIL DATA (HomeScreen ignore karega)
-    notice: '🎉 Flat 20% off on all gift items today!',
+    notice: 'Flat 20% off on all gift items today!',
     offers: [
       'Buy 1 Get 1 on photo frames',
       '₹100 off on orders above ₹999',

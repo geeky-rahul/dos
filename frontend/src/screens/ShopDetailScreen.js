@@ -13,6 +13,8 @@ import {
 
 import { useEffect, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 import { COLORS } from '../constants/colors';
 
 const { width } = Dimensions.get('window');
@@ -94,11 +96,14 @@ export default function ShopDetailScreen({ route, navigation }) {
         <View style={styles.productCard}>
           {/* Product Image */}
           <View style={styles.productImage}>
-            <Text style={styles.productEmoji}>📦</Text>
+            <Icon name="cube" size={32} color={COLORS.primary} />
             {hasDiscount && (
-              <View style={styles.discountBadge}>
-                <Text style={styles.discountText}>{discountPercent}% OFF</Text>
-              </View>
+              <LinearGradient
+                colors={[COLORS.error, COLORS.error + 'CC']}
+                style={styles.discountBadge}
+              >
+                <Text style={styles.discountText}>{discountPercent}%</Text>
+              </LinearGradient>
             )}
           </View>
 
@@ -174,7 +179,7 @@ export default function ShopDetailScreen({ route, navigation }) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         >
-          <Text style={styles.backIcon}>←</Text>
+          <Icon name="chevron-back" size={24} color="#FFF" />
         </TouchableOpacity>
 
         <View style={styles.headerCenter}>
@@ -187,7 +192,7 @@ export default function ShopDetailScreen({ route, navigation }) {
         </View>
 
         <TouchableOpacity style={styles.shareButton} activeOpacity={0.8}>
-          <Text style={styles.shareIcon}>↗️</Text>
+          <Icon name="share-social" size={20} color="#FFF" />
         </TouchableOpacity>
       </View>
 
@@ -208,20 +213,24 @@ export default function ShopDetailScreen({ route, navigation }) {
           {/* Shop Header */}
           <View style={styles.shopHeader}>
             <View style={styles.shopIconContainer}>
-              <Text style={styles.shopIcon}>🏪</Text>
+              <Icon name="storefront" size={32} color={COLORS.primary} />
             </View>
 
             <View style={styles.shopDetails}>
               <View style={styles.ratingRow}>
                 <View style={styles.ratingBadge}>
-                  <Text style={styles.ratingText}>⭐ {shop.rating || '4.5'}</Text>
+                  <Icon name="star" size={14} color="#F59E0B" />
+                  <Text style={styles.ratingText}>{shop.rating || '4.5'}</Text>
                 </View>
                 <Text style={styles.reviewsText}>(250+ reviews)</Text>
               </View>
 
-              <Text style={styles.addressText}>
-                📍 {shop.area || 'Area'}, {shop.city || 'City'}
-              </Text>
+              <View style={styles.addressRow}>
+                <Icon name="location" size={14} color={COLORS.primary} />
+                <Text style={styles.addressText}>
+                  {shop.area || 'Area'}, {shop.city || 'City'}
+                </Text>
+              </View>
 
               <View style={styles.timingRow}>
                 <View style={[styles.statusBadge, shop.isOpen && styles.openBadge]}>
@@ -242,27 +251,35 @@ export default function ShopDetailScreen({ route, navigation }) {
               onPress={callShop}
               activeOpacity={0.8}
             >
-              <Text style={styles.actionIcon}>📞</Text>
+              <Icon name="call" size={18} color={COLORS.primary} />
               <Text style={styles.actionText}>Call</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.actionButton, styles.primaryActionButton]}
-              onPress={openMaps}
-              activeOpacity={0.8}
+            <LinearGradient
+              colors={[COLORS.primary, COLORS.primaryDark]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.primaryActionButton}
             >
-              <Text style={styles.actionIcon}>📍</Text>
-              <Text style={[styles.actionText, styles.primaryActionText]}>
-                Get Directions
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={openMaps}
+                activeOpacity={0.8}
+                style={styles.primaryActionInner}
+              >
+                <Icon name="navigate" size={18} color="#FFF" />
+                <Text style={styles.primaryActionText}>Get Directions</Text>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
 
           {/* Offers Section */}
           {shop.offer && shop.offer > 0 && (
-            <View style={styles.offerContainer}>
+            <LinearGradient
+              colors={['rgba(245, 158, 11, 0.1)', 'rgba(245, 158, 11, 0.05)']}
+              style={styles.offerContainer}
+            >
               <View style={styles.offerIcon}>
-                <Text style={styles.offerEmoji}>🎉</Text>
+                <Icon name="flash" size={20} color="#F59E0B" />
               </View>
               <View style={styles.offerContent}>
                 <Text style={styles.offerTitle}>Special Offer!</Text>
@@ -270,7 +287,7 @@ export default function ShopDetailScreen({ route, navigation }) {
                   Get {shop.offer}% off on all products
                 </Text>
               </View>
-            </View>
+            </LinearGradient>
           )}
         </Animated.View>
 
@@ -303,7 +320,7 @@ export default function ShopDetailScreen({ route, navigation }) {
             ))
           ) : (
             <View style={styles.emptyProducts}>
-              <Text style={styles.emptyEmoji}>📦</Text>
+              <Icon name="cube-outline" size={48} color={COLORS.textMuted} />
               <Text style={styles.emptyText}>
                 {allProducts.length === 0 
                   ? 'No products available' 
@@ -320,7 +337,7 @@ export default function ShopDetailScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: COLORS.background,
   },
 
   scrollContent: {
@@ -333,7 +350,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -348,12 +365,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  backIcon: {
-    fontSize: 24,
-    color: '#FFF',
-    fontWeight: '600',
   },
 
   headerCenter: {
@@ -382,17 +393,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  shareIcon: {
-    fontSize: 18,
-  },
-
   /* SHOP INFO CARD */
   shopInfoCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     marginHorizontal: 16,
     marginTop: 16,
-    borderRadius: 16,
+    borderRadius: 14,
     padding: 16,
+    borderWidth: 1,
+    borderColor: COLORS.border,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
@@ -408,15 +417,11 @@ const styles = StyleSheet.create({
   shopIconContainer: {
     width: 64,
     height: 64,
-    borderRadius: 12,
-    backgroundColor: '#F0F0F0',
+    borderRadius: 14,
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-  },
-
-  shopIcon: {
-    fontSize: 32,
   },
 
   shopDetails: {
@@ -426,34 +431,43 @@ const styles = StyleSheet.create({
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
 
   ratingBadge: {
-    backgroundColor: '#FFF9E6',
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#FFE066',
+    borderColor: 'rgba(245, 158, 11, 0.2)',
   },
 
   ratingText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#D4A800',
+    color: '#F59E0B',
+    marginLeft: 4,
   },
 
   reviewsText: {
     marginLeft: 8,
-    fontSize: 13,
-    color: '#666',
+    fontSize: 12,
+    color: COLORS.textMuted,
+  },
+
+  addressRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
   },
 
   addressText: {
     fontSize: 13,
-    color: '#555',
-    marginBottom: 6,
+    color: COLORS.textSecondary,
+    marginLeft: 6,
     fontWeight: '500',
   },
 
@@ -465,48 +479,49 @@ const styles = StyleSheet.create({
   statusBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFE5E5',
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
   },
 
   openBadge: {
-    backgroundColor: '#E6F7E6',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
   },
 
   statusDot: {
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#FF4444',
+    backgroundColor: COLORS.error,
     marginRight: 4,
   },
 
   openDot: {
-    backgroundColor: '#22C55E',
+    backgroundColor: COLORS.success,
   },
 
   statusText: {
     fontSize: 11,
     fontWeight: '600',
-    color: '#FF4444',
+    color: COLORS.error,
   },
 
   openText: {
-    color: '#22C55E',
+    color: COLORS.success,
   },
 
   timingText: {
     marginLeft: 8,
     fontSize: 12,
-    color: '#666',
+    color: COLORS.textMuted,
   },
 
   /* ACTION BUTTONS */
   actionButtons: {
     flexDirection: 'row',
     marginBottom: 16,
+    gap: 12,
   },
 
   actionButton: {
@@ -514,69 +529,76 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F0F0F0',
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     paddingVertical: 12,
-    borderRadius: 12,
-    marginHorizontal: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   primaryActionButton: {
-    backgroundColor: COLORS.primary,
+    flex: 1,
+    borderRadius: 10,
+    overflow: 'hidden',
   },
 
-  actionIcon: {
-    fontSize: 18,
-    marginRight: 6,
+  primaryActionInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
   },
 
   actionText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '700',
+    color: COLORS.primary,
+    marginLeft: 6,
   },
 
   primaryActionText: {
     color: '#FFF',
+    fontSize: 14,
+    fontWeight: '700',
+    marginLeft: 6,
   },
 
   /* OFFERS */
   offerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#FFF4E5',
     borderRadius: 12,
     padding: 12,
     borderWidth: 1,
-    borderColor: '#FFE0B2',
+    borderColor: 'rgba(245, 158, 11, 0.2)',
   },
 
   offerIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-  },
-
-  offerEmoji: {
-    fontSize: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(245, 158, 11, 0.2)',
   },
 
   offerContent: {
     flex: 1,
+    justifyContent: 'center',
   },
 
   offerTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#E65100',
+    color: '#F59E0B',
     marginBottom: 2,
   },
 
   offerDesc: {
     fontSize: 12,
-    color: '#F57C00',
+    color: COLORS.textSecondary,
   },
 
   /* CATEGORY TABS */
@@ -590,13 +612,13 @@ const styles = StyleSheet.create({
   },
 
   tabChip: {
-    backgroundColor: '#FFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    backgroundColor: COLORS.surface,
+    paddingHorizontal: 18,
+    paddingVertical: 9,
     borderRadius: 20,
     marginRight: 10,
-    borderWidth: 1.5,
-    borderColor: '#E5E5E5',
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   activeTabChip: {
@@ -607,7 +629,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: COLORS.textSecondary,
   },
 
   activeTabText: {
@@ -630,22 +652,24 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
   },
 
   productCount: {
     fontSize: 14,
-    color: '#666',
+    color: COLORS.textMuted,
     fontWeight: '500',
   },
 
   /* PRODUCT CARD */
   productCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 12,
     marginBottom: 12,
     flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: COLORS.border,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
@@ -657,30 +681,32 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 10,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
     position: 'relative',
   },
 
-  productEmoji: {
-    fontSize: 28,
-  },
-
   discountBadge: {
     position: 'absolute',
-    top: -4,
-    right: -4,
-    backgroundColor: '#FF6B6B',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    top: -6,
+    right: -6,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
   discountText: {
     color: '#FFF',
-    fontSize: 9,
+    fontSize: 11,
     fontWeight: '800',
   },
 
@@ -690,14 +716,14 @@ const styles = StyleSheet.create({
 
   productName: {
     fontSize: 15,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: '700',
+    color: COLORS.text,
     marginBottom: 4,
   },
 
   productDesc: {
     fontSize: 12,
-    color: '#777',
+    color: COLORS.textMuted,
     marginBottom: 6,
     lineHeight: 16,
   },
@@ -715,7 +741,7 @@ const styles = StyleSheet.create({
   },
 
   currentPrice: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
     color: COLORS.primary,
     marginRight: 6,
@@ -723,31 +749,33 @@ const styles = StyleSheet.create({
 
   originalPrice: {
     fontSize: 13,
-    color: '#999',
+    color: COLORS.textMuted,
     textDecorationLine: 'line-through',
   },
 
   stockBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E6F7E6',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(16, 185, 129, 0.2)',
   },
 
   stockDot: {
     width: 5,
     height: 5,
     borderRadius: 2.5,
-    backgroundColor: '#22C55E',
+    backgroundColor: COLORS.success,
     marginRight: 4,
   },
 
   stockText: {
     fontSize: 10,
     fontWeight: '600',
-    color: '#22C55E',
+    color: COLORS.success,
   },
 
   tagsContainer: {
@@ -757,18 +785,20 @@ const styles = StyleSheet.create({
   },
 
   tag: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 6,
     marginRight: 6,
     marginBottom: 4,
+    borderWidth: 1,
+    borderColor: 'rgba(37, 99, 235, 0.2)',
   },
 
   tagText: {
     fontSize: 10,
-    color: '#666',
-    fontWeight: '500',
+    color: COLORS.primary,
+    fontWeight: '600',
   },
 
   /* EMPTY STATE */
@@ -777,13 +807,9 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
 
-  emptyEmoji: {
-    fontSize: 48,
-    marginBottom: 12,
-  },
-
   emptyText: {
     fontSize: 14,
-    color: '#999',
+    color: COLORS.textMuted,
+    marginTop: 8,
   },
 });

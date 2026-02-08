@@ -10,6 +10,7 @@ import {
 
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import auth from '@react-native-firebase/auth';
 
@@ -21,38 +22,38 @@ export default function AccountScreen({ navigation }) {
     {
       section: 'Account',
       items: [
-        { icon: '👤', label: 'Edit Profile', action: 'editProfile' },
-        { icon: '📍', label: 'Saved Addresses', action: 'addresses' },
-        { icon: '❤️', label: 'Favorite Shops', action: 'favorites', badge: '12' },
+        { icon: 'person', label: 'Edit Profile', action: 'editProfile' },
+        { icon: 'location', label: 'Saved Addresses', action: 'addresses' },
+        { icon: 'heart', label: 'Favorite Shops', action: 'favorites', badge: '12' },
       ],
     },
     {
       section: 'Preferences',
       items: [
         {
-          icon: '🔔',
+          icon: 'notifications',
           label: 'Notifications',
           toggle: true,
           value: notificationsEnabled,
           onToggle: setNotificationsEnabled,
         },
         {
-          icon: '🌙',
+          icon: 'moon',
           label: 'Dark Mode',
           toggle: true,
           value: darkModeEnabled,
           onToggle: setDarkModeEnabled,
         },
-        { icon: '🌐', label: 'Language', action: 'language', subtitle: 'English' },
+        { icon: 'globe', label: 'Language', action: 'language', subtitle: 'English' },
       ],
     },
     {
       section: 'Support',
       items: [
-        { icon: '❓', label: 'Help & Support', action: 'help' },
-        { icon: '⭐', label: 'Rate Us', action: 'rate' },
-        { icon: '📧', label: 'Feedback', action: 'feedback' },
-        { icon: 'ℹ️', label: 'About', action: 'about', subtitle: 'Version 1.0.0' },
+        { icon: 'help-circle', label: 'Help & Support', action: 'help' },
+        { icon: 'star', label: 'Rate Us', action: 'rate' },
+        { icon: 'mail', label: 'Feedback', action: 'feedback' },
+        { icon: 'information-circle', label: 'About', action: 'about', subtitle: 'Version 1.0.0' },
       ],
     },
   ];
@@ -83,7 +84,7 @@ export default function AccountScreen({ navigation }) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         >
-          <Text style={styles.backIcon}>←</Text>
+          <Icon name="chevron-back" size={28} color={COLORS.text} />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>Account</Text>
@@ -94,7 +95,7 @@ export default function AccountScreen({ navigation }) {
         {/* PROFILE CARD */}
         <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
-            <Text style={styles.avatarText}>👤</Text>
+            <Icon name="person" size={40} color={COLORS.primary} />
           </View>
 
           <View style={styles.profileInfo}>
@@ -107,7 +108,7 @@ export default function AccountScreen({ navigation }) {
             style={styles.editButton}
             onPress={() => handleMenuPress('editProfile')}
           >
-            <Text style={styles.editIcon}>✏️</Text>
+            <Icon name="pencil" size={18} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
 
@@ -141,9 +142,12 @@ export default function AccountScreen({ navigation }) {
                     activeOpacity={item.toggle ? 1 : 0.7}
                   >
                     <View style={styles.menuLeft}>
-                      <View style={styles.menuIcon}>
-                        <Text style={styles.menuIconText}>{item.icon}</Text>
-                      </View>
+                      <Icon
+                        name={item.icon}
+                        size={22}
+                        color={COLORS.primary}
+                        style={styles.menuIconObj}
+                      />
 
                       <View style={styles.menuTextContainer}>
                         <View style={styles.menuLabelRow}>
@@ -164,11 +168,11 @@ export default function AccountScreen({ navigation }) {
                       <Switch
                         value={item.value}
                         onValueChange={item.onToggle}
-                        trackColor={{ false: '#D1D5DB', true: COLORS.primary }}
+                        trackColor={{ false: COLORS.border, true: COLORS.primary }}
                         thumbColor="#FFF"
                       />
                     ) : (
-                      <Text style={styles.menuArrow}>›</Text>
+                      <Icon name="chevron-forward" size={20} color={COLORS.textMuted} />
                     )}
                   </TouchableOpacity>
 
@@ -184,16 +188,19 @@ export default function AccountScreen({ navigation }) {
         {/* LOGOUT */}
         <TouchableOpacity
           style={styles.logoutButton}
-          activeOpacity={0.8}
           onPress={handleLogout}
         >
-          <Text style={styles.logoutIcon}>🚪</Text>
+          <Icon name="log-out" size={20} color="#FFF" />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
 
         {/* FOOTER */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Made with ❤️ for Local Shops</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.footerText}>Made with </Text>
+            <Icon name="heart" size={14} color={COLORS.accent} style={{ marginHorizontal: 6 }} />
+            <Text style={styles.footerText}>for Local Shops</Text>
+          </View>
           <Text style={styles.footerVersion}>Version 1.0.0</Text>
         </View>
       </ScrollView>
@@ -218,33 +225,25 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 4,
   },
 
   backButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 8,
   },
 
   backIcon: {
     fontSize: 24,
-    color: '#FFF',
+    color: COLORS.text,
     fontWeight: '600',
-    justifyContent: 'center',
-    alignItems: 'center',
-    
   },
 
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#FFF',
+    color: COLORS.text,
   },
 
   placeholder: {
@@ -253,10 +252,10 @@ const styles = StyleSheet.create({
 
   /* PROFILE CARD */
   profileCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     marginHorizontal: 16,
     marginTop: 16,
-    borderRadius: 16,
+    borderRadius: 14,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -265,13 +264,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   avatarContainer: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: COLORS.primary,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
@@ -286,28 +287,28 @@ const styles = StyleSheet.create({
   },
 
   userName: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
     marginBottom: 4,
   },
 
   userEmail: {
     fontSize: 13,
-    color: '#666',
+    color: COLORS.textSecondary,
     marginBottom: 2,
   },
 
   userPhone: {
     fontSize: 13,
-    color: '#666',
+    color: COLORS.textSecondary,
   },
 
   editButton: {
     width: 40,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -326,19 +327,21 @@ const styles = StyleSheet.create({
 
   statCard: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
-    padding: 16,
+    padding: 14,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   statValue: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
     color: COLORS.primary,
     marginBottom: 4,
@@ -346,7 +349,7 @@ const styles = StyleSheet.create({
 
   statLabel: {
     fontSize: 11,
-    color: '#666',
+    color: COLORS.textSecondary,
     textAlign: 'center',
   },
 
@@ -358,13 +361,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
     marginHorizontal: 16,
     marginBottom: 10,
   },
 
   menuCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     marginHorizontal: 16,
     borderRadius: 12,
     shadowColor: '#000',
@@ -372,6 +375,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   menuItem: {
@@ -391,9 +396,13 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: COLORS.background,
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 12,
+  },
+
+  menuIconObj: {
     marginRight: 12,
   },
 
@@ -413,11 +422,11 @@ const styles = StyleSheet.create({
   menuLabel: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1A1A1A',
+    color: COLORS.text,
   },
 
   badge: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: COLORS.error,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10,
@@ -432,19 +441,19 @@ const styles = StyleSheet.create({
 
   menuSubtitle: {
     fontSize: 12,
-    color: '#999',
+    color: COLORS.textMuted,
     marginTop: 2,
   },
 
   menuArrow: {
     fontSize: 24,
-    color: '#CCC',
+    color: COLORS.divider,
     fontWeight: '300',
   },
 
   menuDivider: {
     height: 1,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: COLORS.border,
     marginLeft: 66,
   },
 
@@ -453,13 +462,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.error,
     marginHorizontal: 16,
     marginTop: 20,
-    padding: 16,
+    padding: 14,
     borderRadius: 12,
-    borderWidth: 1.5,
-    borderColor: '#FF6B6B',
+    shadowColor: COLORS.error,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
   logoutIcon: {
@@ -470,7 +482,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FF6B6B',
+    color: '#FFF',
   },
 
   /* FOOTER */
@@ -481,7 +493,7 @@ const styles = StyleSheet.create({
 
   footerText: {
     fontSize: 13,
-    color: '#999',
+    color: COLORS.textMuted,
     marginBottom: 4,
   },
 

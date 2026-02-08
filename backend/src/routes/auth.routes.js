@@ -1,12 +1,9 @@
-const express = require('express');
+import express from "express";
+import firebaseAuth from "../middleware/firebaseAuth.js";
+import { syncUser } from "../controllers/auth.controller.js";
+
 const router = express.Router();
 
-const {
-  registerUser,
-  loginUser,
-} = require('../controllers/auth.controller');
+router.post("/me", firebaseAuth, syncUser);
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
-
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const shopSchema = new mongoose.Schema(
   {
@@ -26,20 +26,36 @@ const shopSchema = new mongoose.Schema(
       type: String,
     },
 
+    owner: {
+      type: String,
+    },
+
+    category: {
+      type: String,
+      default: 'General',
+    },
+
+    // Simple numeric offer (percentage) for quick display
+    offer: {
+      type: Number,
+      default: 0,
+    },
+
     notice: {
       type: String,
     },
 
-    offers: [
-      {
-        type: String,
-      },
-    ],
+    offers: [String],
 
     products: [
       {
-        name: String,
-        price: String,
+        name: { type: String },
+        price: { type: Number },
+        originalPrice: { type: Number },
+        description: { type: String },
+        inStock: { type: Boolean, default: true },
+        tags: [String],
+        category: { type: String },
       },
     ],
 
@@ -51,4 +67,4 @@ const shopSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Shop', shopSchema);
+export default mongoose.model('Shop', shopSchema);

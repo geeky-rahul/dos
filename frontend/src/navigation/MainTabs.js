@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -9,20 +10,9 @@ import { COLORS } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
-const TabIcon = ({ icon, focused }) => (
+const TabIcon = ({ name, focused }) => (
   <View style={{ alignItems: 'center' }}>
-    <Text style={{ fontSize: 18 }}>{icon}</Text>
-    {focused && (
-      <View
-        style={{
-          width: 20,
-          height: 2,
-          backgroundColor: COLORS.primary,
-          marginTop: 4,
-          borderRadius: 2,
-        }}
-      />
-    )}
+    <Icon name={focused ? name : `${name}-outline`} size={22} color={focused ? COLORS.primary : COLORS.textMuted} />
   </View>
 );
 
@@ -31,28 +21,27 @@ export default function MainTabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-
         tabBarStyle: {
-          height: 65,
-          borderTopColor: '#ddd',
+          height: 68,
+          borderTopColor: '#E6EEF9',
+          backgroundColor: COLORS.surface,
+          paddingBottom: 8,
         },
 
         tabBarLabelStyle: {
           fontSize: 12,
-          marginBottom: 5,
+          marginBottom: 4,
         },
 
         tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: '#888',
+        tabBarInactiveTintColor: COLORS.textMuted,
 
         tabBarIcon: ({ focused }) => {
-          let icon = '⬤';
-          if (route.name === 'Home') icon = '🏠';
-          if (route.name === 'Play') icon = '▶️';
-          if (route.name === 'Deals') icon = '%';
-          if (route.name === 'Account') icon = '👤';
-
-          return <TabIcon icon={icon} focused={focused} />;
+          if (route.name === 'Home') return <TabIcon name="home" focused={focused} />;
+          if (route.name === 'Play') return <TabIcon name="play-circle" focused={focused} />;
+          if (route.name === 'Deals') return <TabIcon name="pricetag" focused={focused} />;
+          if (route.name === 'Account') return <TabIcon name="person" focused={focused} />;
+          return null;
         },
       })}
     >

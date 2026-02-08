@@ -14,6 +14,7 @@ import {
 
 import { useEffect, useState, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 
 const { width } = Dimensions.get('window');
@@ -66,7 +67,7 @@ function ShopCard({ item, index, navigation, query }) {
         )}
 
         <View style={styles.shopImagePlaceholder}>
-          <Text style={styles.shopImageEmoji}>🏪</Text>
+          <Icon name="storefront" size={32} color={COLORS.primary} />
         </View>
 
         <View style={styles.shopInfo}>
@@ -86,7 +87,8 @@ function ShopCard({ item, index, navigation, query }) {
 
           <View style={styles.statusRow}>
             <View style={styles.distanceTag}>
-              <Text style={styles.distanceText}>📍 2.3 km</Text>
+              <Icon name="location" size={12} color={COLORS.textSecondary} />
+              <Text style={[styles.distanceText, { marginLeft: 6 }]}>2.3 km</Text>
             </View>
             <View style={[styles.statusTag, item.isOpen && styles.openTag]}>
               <View style={[styles.statusDot, item.isOpen && styles.openDot]} />
@@ -98,7 +100,7 @@ function ShopCard({ item, index, navigation, query }) {
 
           {matchingProducts.length > 0 && (
             <View style={styles.matchContainer}>
-              <Text style={styles.matchIcon}>✓</Text>
+              <Icon name="checkmark" size={12} color={COLORS.success} style={{ marginRight: 6 }} />
               <Text style={styles.matchText}>
                 {matchingProducts.length} matching product
                 {matchingProducts.length > 1 ? 's' : ''}
@@ -118,7 +120,7 @@ function ShopCard({ item, index, navigation, query }) {
           onPress={() => item.mapUrl && Linking.openURL(item.mapUrl)}
           activeOpacity={0.8}
         >
-          <Text style={styles.mapIcon}>📍</Text>
+          <Icon name="location" size={18} color="#FFF" />
         </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>
@@ -217,7 +219,9 @@ export default function HomeScreen({ navigation }) {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <Text style={styles.loaderEmoji}>🏪</Text>
+        <View style={styles.loaderIcon}>
+          <Icon name="storefront" size={48} color={COLORS.primary} />
+        </View>
         <Text style={styles.loaderText}>Finding shops near you...</Text>
       </View>
     );
@@ -230,11 +234,11 @@ export default function HomeScreen({ navigation }) {
       {/* HEADER */}
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
         <View style={styles.headerLeft}>
-          <Text style={styles.headerGreeting}>Hello! 👋</Text>
+          <Text style={styles.headerGreeting}>Discover Shops</Text>
           <TouchableOpacity style={styles.locationButton}>
-            <Text style={styles.locationIcon}>📍</Text>
+            <Icon name="location" size={16} color="#FFF" />
             <Text style={styles.locationName}>Faridabad</Text>
-            <Text style={styles.locationDropdown}>▼</Text>
+            <Icon name="chevron-down" size={16} color="#FFF" />
           </TouchableOpacity>
         </View>
 
@@ -244,7 +248,7 @@ export default function HomeScreen({ navigation }) {
           activeOpacity={0.8}
         >
           <View style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>👤</Text>
+            <Icon name="person" size={20} color={COLORS.primary} />
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -260,17 +264,17 @@ export default function HomeScreen({ navigation }) {
         ]}
       >
         <View style={styles.searchWrapper}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <Icon name="search" size={18} color={COLORS.textMuted} />
           <TextInput
-            placeholder="Search for shops or products..."
-            placeholderTextColor="#999"
+            placeholder="Search shops or products..."
+            placeholderTextColor={COLORS.textMuted}
             value={query}
             onChangeText={setQuery}
             style={styles.searchInput}
           />
           {query.length > 0 && (
             <TouchableOpacity onPress={() => setQuery('')} style={styles.clearButton}>
-              <Text style={styles.clearIcon}>✕</Text>
+              <Icon name="close" size={18} color={COLORS.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -323,7 +327,9 @@ export default function HomeScreen({ navigation }) {
         )}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyEmoji}>🔍</Text>
+            <View style={styles.emptyIcon}>
+              <Icon name="search" size={48} color={COLORS.textMuted} />
+            </View>
             <Text style={styles.emptyTitle}>No shops found</Text>
             <Text style={styles.emptyText}>
               Try adjusting your search or category filter
@@ -340,25 +346,24 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: COLORS.background,
   },
 
   loaderContainer: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: COLORS.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  loaderEmoji: {
-    fontSize: 48,
-    marginBottom: 12,
+  loaderIcon: {
+    marginBottom: 16,
   },
 
   loaderText: {
-    fontSize: 16,
-    color: '#666',
-    fontWeight: '500',
+    fontSize: 15,
+    color: COLORS.textSecondary,
+    fontWeight: '600',
   },
 
   /* HEADER */
@@ -369,13 +374,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 8,
   },
 
   headerLeft: {
@@ -384,44 +382,26 @@ const styles = StyleSheet.create({
 
   headerGreeting: {
     color: '#FFF',
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 6,
-    opacity: 0.9,
-  },
-
-  headerTitle: {
-    color: '#FFF',
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '700',
+    marginBottom: 8,
   },
 
   locationButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     alignSelf: 'flex-start',
   },
 
-  locationIcon: {
-    fontSize: 14,
-    marginRight: 4,
-  },
-
   locationName: {
     color: '#FFF',
-    fontSize: 15,
-    fontWeight: '700',
-    marginRight: 4,
-  },
-
-  locationDropdown: {
-    color: '#FFF',
-    fontSize: 10,
-    opacity: 0.8,
+    fontSize: 14,
+    fontWeight: '600',
+    marginHorizontal: 6,
   },
 
   profileButton: {
@@ -437,72 +417,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.15,
     shadowRadius: 4,
-    elevation: 3,
-  },
-
-  profileEmoji: {
-    fontSize: 20,
+    elevation: 4,
   },
 
   /* SEARCH */
   searchContainer: {
     paddingHorizontal: 20,
-    marginTop: -20,
+    marginTop: -12,
     marginBottom: 16,
     zIndex: 10,
   },
 
   searchWrapper: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    height: 52,
-    borderRadius: 16,
+    height: 48,
+    borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
-  },
-
-  searchBox: {
-    backgroundColor: '#FFF',
-    marginHorizontal: 20,
-    marginTop: -20,
-    marginBottom: 16,
-    paddingHorizontal: 16,
-    height: 52,
-    borderRadius: 16,
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-
-  searchIcon: {
-    fontSize: 18,
-    marginRight: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   searchInput: {
     flex: 1,
     fontSize: 15,
-    color: '#000',
+    color: COLORS.text,
     fontWeight: '500',
+    marginLeft: 12,
   },
 
   clearButton: {
     padding: 4,
-  },
-
-  clearIcon: {
-    fontSize: 16,
-    color: '#999',
   },
 
   /* CATEGORY FILTER */
@@ -516,13 +469,13 @@ const styles = StyleSheet.create({
   },
 
   categoryChip: {
-    backgroundColor: '#FFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    backgroundColor: COLORS.surface,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 20,
     marginRight: 10,
     borderWidth: 1.5,
-    borderColor: '#E5E5E5',
+    borderColor: COLORS.border,
   },
 
   activeCategory: {
@@ -531,9 +484,9 @@ const styles = StyleSheet.create({
   },
 
   categoryText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
-    color: '#666',
+    color: COLORS.textSecondary,
   },
 
   activeCategoryText: {
@@ -552,18 +505,18 @@ const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
   },
 
   /* SHOP CARD */
   shopCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: COLORS.surface,
     marginHorizontal: 20,
     marginTop: 12,
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 12,
+    padding: 14,
     flexDirection: 'row',
     alignItems: 'flex-start',
     shadowColor: '#000',
@@ -572,17 +525,19 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     position: 'relative',
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   offerBadge: {
     position: 'absolute',
     top: -6,
     right: 12,
-    backgroundColor: '#FF6B6B',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 8,
-    shadowColor: '#FF6B6B',
+    backgroundColor: COLORS.error,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    shadowColor: COLORS.error,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -592,19 +547,21 @@ const styles = StyleSheet.create({
 
   offerText: {
     color: '#FFF',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '800',
     letterSpacing: 0.5,
   },
 
   shopImagePlaceholder: {
-    width: 72,
-    height: 72,
-    borderRadius: 12,
-    backgroundColor: '#F0F0F0',
+    width: 68,
+    height: 68,
+    borderRadius: 10,
+    backgroundColor: COLORS.background,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   shopImageEmoji: {
@@ -617,42 +574,42 @@ const styles = StyleSheet.create({
   },
 
   shopName: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
     marginBottom: 6,
   },
 
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 7,
   },
 
   ratingBox: {
-    backgroundColor: '#FFF9E6',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#FFE066',
+    borderColor: 'rgba(59, 130, 246, 0.3)',
   },
 
   ratingText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    color: '#D4A800',
+    color: COLORS.primary,
   },
 
   separator: {
     marginHorizontal: 6,
-    color: '#CCC',
+    color: COLORS.divider,
     fontSize: 12,
   },
 
   locationText: {
-    fontSize: 13,
-    color: '#666',
+    fontSize: 12,
+    color: COLORS.textSecondary,
     fontWeight: '500',
     flex: 1,
   },
@@ -660,99 +617,99 @@ const styles = StyleSheet.create({
   statusRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
 
   distanceTag: {
-    backgroundColor: '#F0F0F0',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+    backgroundColor: 'rgba(71, 85, 105, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
     marginRight: 8,
   },
 
   distanceText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '600',
-    color: '#555',
+    color: COLORS.textSecondary,
   },
 
   statusTag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFE5E5',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
 
   openTag: {
-    backgroundColor: '#E6F7E6',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
   },
 
   statusDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#FF4444',
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: COLORS.error,
     marginRight: 4,
   },
 
   openDot: {
-    backgroundColor: '#22C55E',
+    backgroundColor: COLORS.success,
   },
 
   statusText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '600',
-    color: '#FF4444',
+    color: COLORS.error,
   },
 
   openText: {
-    color: '#22C55E',
+    color: COLORS.success,
   },
 
   matchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E8F5E9',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4,
     marginTop: 4,
     alignSelf: 'flex-start',
   },
 
   matchIcon: {
-    fontSize: 12,
-    color: '#22C55E',
+    fontSize: 11,
+    color: COLORS.success,
     marginRight: 4,
   },
 
   matchText: {
-    fontSize: 12,
-    color: '#22C55E',
+    fontSize: 11,
+    color: COLORS.success,
     fontWeight: '700',
   },
 
   productsPreview: {
-    fontSize: 12,
-    color: '#999',
-    marginTop: 6,
+    fontSize: 11,
+    color: COLORS.textMuted,
+    marginTop: 5,
     fontStyle: 'italic',
   },
 
   mapButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 38,
+    height: 38,
+    borderRadius: 10,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 8,
     shadowColor: COLORS.primary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 4,
   },
@@ -768,21 +725,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
 
+  emptyIcon: {
+    marginBottom: 16,
+    marginTop: 20,
+  },
+
   emptyEmoji: {
     fontSize: 64,
     marginBottom: 16,
   },
 
   emptyTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: COLORS.text,
     marginBottom: 8,
   },
 
   emptyText: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 13,
+    color: COLORS.textMuted,
     textAlign: 'center',
     lineHeight: 20,
   },

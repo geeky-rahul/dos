@@ -1,12 +1,23 @@
-const express = require('express');
+import express from "express";
+import firebaseAuth from "../middleware/firebaseAuth.js";
+import {
+  createShop,
+  getMyShops,
+  getAllShops,
+} from "../controllers/shop.controller.js";
+
 const router = express.Router();
 
-const {
-  getAllShops,
-  addShop,
-} = require('../controllers/shop.controller');
+// Public: list shops (supports ?category= & ?q=search)
+router.get("/", getAllShops);
 
-router.get('/', getAllShops);
-router.post('/add', addShop);
+// Dev-only seed endpoint
+router.get('/seed', seedShops);
 
-module.exports = router;
+// Protected: create a shop (owner must be authenticated)
+router.post("/", firebaseAuth, createShop);
+
+// Protected: get shops owned by authenticated user
+router.get("/my", firebaseAuth, getMyShops);
+
+export default router;
