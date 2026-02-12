@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const shopSchema = new mongoose.Schema(
   {
+    ownerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,
@@ -35,7 +41,6 @@ const shopSchema = new mongoose.Schema(
       default: 'General',
     },
 
-    // Simple numeric offer (percentage) for quick display
     offer: {
       type: Number,
       default: 0,
@@ -63,8 +68,22 @@ const shopSchema = new mongoose.Schema(
       phone: String,
       address: String,
     },
+
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point',
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0],
+      },
+    },
   },
   { timestamps: true }
 );
+
+shopSchema.index({ location: '2dsphere' });
 
 export default mongoose.model('Shop', shopSchema);

@@ -27,6 +27,24 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'shopkeeper'],
       default: 'user',
     },
+    // Subscription fields for shopkeepers
+    subscriptionPlan: {
+      type: String,
+      enum: ['free', 'basic', 'premium'],
+      default: 'free',
+    },
+    subscriptionExpiry: {
+      type: Date,
+      default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+    },
+    phone: {
+      type: String,
+    },
+    // Whether shop owner completed their shop profile
+    shopProfileComplete: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

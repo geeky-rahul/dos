@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from '../services/firebase';
 import { COLORS } from '../constants/colors';
 
@@ -26,6 +27,10 @@ export default function RegisterScreen({ navigation }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [role, setRole] = useState('user'); // 'user' or 'shopkeeper'
+  
+  // Shop owner specific fields
+  // removed shop-specific fields from register screen; owners complete on ShopSetup
 
   /* ================= VALIDATION ================= */
   const validateEmail = (email) => {
@@ -64,6 +69,8 @@ export default function RegisterScreen({ navigation }) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
 
+    // shop owner will complete shop details in ShopSetup screen
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
@@ -78,9 +85,63 @@ export default function RegisterScreen({ navigation }) {
         displayName: name.trim(),
       });
 
-      Alert.alert('Success', 'Account created successfully!', [
-        { text: 'OK' },
-      ]);
+      // Save role to backend (with fallback)
+      try {
+        const token = await userCredential.user.getIdToken();
+        const userId = userCredential.user.uid;
+        let userRole = role; // Use selected role
+        
+        try {
+          const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ role }),
+          });
+
+          if (response.ok) {
+            const userData = await response.json();
+            userRole = userData.role || role;
+            console.log('✅ Backend role sync success:', userRole);
+          } else {
+            console.warn('Backend sync warning:', response.status);
+          }
+        } catch (fetchError) {
+          console.warn('Backend unreachable, using selected role:', fetchError.message);
+          // Continue with selected role
+        }
+
+        // Store in AsyncStorage (auto-login after registration)
+        await AsyncStorage.multiSet([
+          ['userToken', token],
+          ['userId', userId],
+          ['userRole', userRole],
+        ]);
+        
+        console.log('✅ Registration + Login success:', { userRole, userId });
+      } catch (error) {
+        throw error;
+      }
+
+      Alert.alert(
+        'Success',
+        `Account created successfully as ${role === 'shopkeeper' ? 'Shop Owner' : 'Regular User'}!`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              // Navigate based on role
+              if (role === 'shopkeeper') {
+                navigation.replace('ShopSetup');
+              } else {
+                navigation.replace('MainTabs');
+              }
+            },
+          },
+        ]
+      );
     } catch (error) {
       let errorMsg = error.message;
       if (error.code === 'auth/email-already-in-use') {
@@ -219,6 +280,66 @@ export default function RegisterScreen({ navigation }) {
               </View>
               {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
             </View>
+
+            {/* Role Selection */}
+            <View style={styles.roleContainer}>
+              <Text style={styles.roleLabel}>I am registering as:</Text>
+              <View style={styles.roleButtonsContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.roleButton,
+                    role === 'user' && styles.roleButtonActive,
+                  ]}
+                  onPress={() => {
+                    setRole('user');
+                    setErrors({});
+                  }}
+                  disabled={loading}
+                >
+                  <Icon
+                    name="person"
+                    size={20}
+                    color={role === 'user' ? '#FFF' : COLORS.primary}
+                  />
+                  <Text
+                    style={[
+                      styles.roleButtonText,
+                      role === 'user' && styles.roleButtonTextActive,
+                    ]}
+                  >
+                    Regular User
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.roleButton,
+                    role === 'shopkeeper' && styles.roleButtonActive,
+                  ]}
+                  onPress={() => {
+                    setRole('shopkeeper');
+                    setErrors({});
+                  }}
+                  disabled={loading}
+                >
+                  <Icon
+                    name="storefront"
+                    size={20}
+                    color={role === 'shopkeeper' ? '#FFF' : COLORS.primary}
+                  />
+                  <Text
+                    style={[
+                      styles.roleButtonText,
+                      role === 'shopkeeper' && styles.roleButtonTextActive,
+                    ]}
+                  >
+                    Shop Owner
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Shop owner will complete shop details in ShopSetup screen after registration */}
 
             {/* Register Button */}
             <LinearGradient
@@ -418,5 +539,43 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontSize: 14,
     fontWeight: '700',
+  },
+  roleContainer: {
+    marginBottom: 24,
+    marginTop: 8,
+  },
+  roleLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1A1A1A',
+    marginBottom: 12,
+  },
+  roleButtonsContainer: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  roleButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    paddingVertical: 12,
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+    backgroundColor: '#FFFFFF',
+  },
+  roleButtonActive: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  roleButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.primary,
+    marginLeft: 8,
+  },
+  roleButtonTextActive: {
+    color: '#FFFFFF',
   },
 });

@@ -4,20 +4,29 @@ import {
   createShop,
   getMyShops,
   getAllShops,
+  seedShops,
+  getNearbyShops,
+  getShopById,
 } from "../controllers/shop.controller.js";
 
 const router = express.Router();
 
-// Public: list shops (supports ?category= & ?q=search)
+// 🔓 Public: list all shops (supports ?category= & ?q=search)
 router.get("/", getAllShops);
 
-// Dev-only seed endpoint
-router.get('/seed', seedShops);
+// 🔓 Public: nearby shops (2dsphere)
+router.get("/nearby", getNearbyShops);
 
-// Protected: create a shop (owner must be authenticated)
+// 🔓 Public: get single shop by ID
+router.get("/:shopId", getShopById);
+
+// 🛠 Dev-only: seed shops
+router.get("/seed", seedShops);
+
+// 🔐 Protected: create a shop
 router.post("/", firebaseAuth, createShop);
 
-// Protected: get shops owned by authenticated user
+// 🔐 Protected: get shops owned by logged-in user
 router.get("/my", firebaseAuth, getMyShops);
 
 export default router;

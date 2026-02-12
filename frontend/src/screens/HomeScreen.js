@@ -10,12 +10,15 @@ import {
   Animated,
   Dimensions,
   RefreshControl,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 
 import { useEffect, useState, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
+import Geolocation from 'react-native-geolocation-service';
 
 const { width } = Dimensions.get('window');
 
@@ -136,6 +139,9 @@ export default function HomeScreen({ navigation }) {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
+  const [userLocation, setUserLocation] = useState('Current Location');
+  const [locationCoords, setLocationCoords] = useState(null);
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
 
@@ -143,6 +149,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetchShops();
+    getCurrentLocation();
 
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -158,6 +165,100 @@ export default function HomeScreen({ navigation }) {
     ]).start();
   }, []);
 
+    // 🔥 LOCATION FUNCTION WITH REVERSE GEOCODING
+  const getCurrentLocation = async () => {
+    try {
+      let hasPermission = true;
+
+      // Check and request permission on Android
+      if (Platform.OS === 'android') {
+        try {
+          const checkPermission = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+          );
+
+          if (!checkPermission) {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                title: 'Location Permission Required',
+                message: 'This app needs access to your location to show nearby shops',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Deny',
+                buttonPositive: 'Allow',
+              }
+            );
+            hasPermission = granted === PermissionsAndroid.RESULTS.GRANTED;
+          }
+        } catch (err) {
+          console.log('Permission check error:', err);
+        }
+      }
+
+      if (!hasPermission) {
+        setUserLocation('Enable Location');
+        return;
+      }
+
+      setUserLocation('Fetching location...');
+
+      Geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            setLocationCoords({ lat: latitude, lng: longitude });
+            console.log('GPS Location found:', latitude, longitude);
+
+            // Call backend for reverse geocoding
+            try {
+              console.log('Fetching address from backend...');
+              const response = await fetch(
+                `http://10.0.2.2:5000/api/location/reverse?lat=${latitude}&lng=${longitude}`
+              );
+              
+              if (response.ok) {
+                const data = await response.json();
+                console.log('Location from backend:', data);
+                
+                const locationName = `${data.area}, ${data.city}`;
+                console.log('Formatted location:', locationName);
+                setUserLocation(locationName);
+              } else {
+                console.log('Backend returned error:', response.status);
+                setUserLocation('Faridabad');
+              }
+            } catch (error) {
+              console.log('Backend location error:', error.message);
+              setUserLocation('Faridabad');
+            }
+          } catch (error) {
+            console.log('Location processing error:', error);
+            setUserLocation('Faridabad');
+          }
+        },
+        (error) => {
+          console.log('Geolocation error:', error);
+          console.log('Error code:', error.code);
+          console.log('Error message:', error.message);
+          
+          if (error.code === 1) {
+            setUserLocation('Permission Denied');
+          } else if (error.code === 2) {
+            setUserLocation('Location Unavailable');
+          } else if (error.code === 3) {
+            setUserLocation('Timeout - Try Again');
+          } else {
+            setUserLocation('Faridabad');
+          }
+        },
+        { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
+      );
+    } catch (err) {
+      console.log('Location permission error:', err);
+      setUserLocation('Faridabad');
+    }
+  };
+  
   const fetchShops = async () => {
     try {
       const res = await fetch('http://10.0.2.2:5000/api/shops');
@@ -235,9 +336,12 @@ export default function HomeScreen({ navigation }) {
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
         <View style={styles.headerLeft}>
           <Text style={styles.headerGreeting}>Discover Shops</Text>
-          <TouchableOpacity style={styles.locationButton}>
+          <TouchableOpacity 
+            style={styles.locationButton}
+            onPress={getCurrentLocation}
+          >
             <Icon name="location" size={16} color="#FFF" />
-            <Text style={styles.locationName}>Faridabad</Text>
+            <Text style={styles.locationName}>{String(userLocation || 'Current Location')}</Text>
             <Icon name="chevron-down" size={16} color="#FFF" />
           </TouchableOpacity>
         </View>

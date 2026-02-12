@@ -40,3 +40,18 @@ export const COLORS = {
   gradient1: '#2563EB',
   gradient2: '#1E40AF',
 };
+
+// Shop Owner Theme (Purple)
+export const OWNER_COLORS = {
+  primary: '#8B5CF6',      // Purple
+  primaryLight: '#A78BFA',
+  primaryDark: '#7C3AED',
+  secondary: '#6366F1',    // Indigo
+  accent: '#D946EF',       // Magenta
+  background: '#F3E8FF',   // Light Purple
+  surface: '#FFFFFF',
+  success: '#10B981',
+  error: '#EF4444',
+  gradient1: '#8B5CF6',
+  gradient2: '#7C3AED',
+};

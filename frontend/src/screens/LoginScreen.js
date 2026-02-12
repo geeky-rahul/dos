@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -61,10 +62,63 @@ export default function LoginScreen({ navigation }) {
 
     try {
       setLoading(true);
-      await auth().signInWithEmailAndPassword(
+      
+      // Firebase login
+      const userCredential = await auth().signInWithEmailAndPassword(
         email.trim(),
         password
       );
+
+      // Get Firebase token
+      const token = await userCredential.user.getIdToken();
+      const userId = userCredential.user.uid;
+
+      // Fetch user role and shopProfileComplete from backend (with fallback)
+      let userRole = 'user'; // Default fallback
+      let shopProfileComplete = false;
+
+      try {
+        const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          userRole = userData.role || 'user';
+          shopProfileComplete = !!userData.shopProfileComplete;
+          console.log('✅ User data fetched:', { userRole, shopProfileComplete });
+        } else {
+          console.warn('Backend response not ok:', response.status);
+        }
+      } catch (fetchError) {
+        console.warn('Backend unreachable, using default user role:', fetchError.message);
+        // Continue with default 'user' role and shopProfileComplete = false
+      }
+
+      // Store in AsyncStorage
+      await AsyncStorage.multiSet([
+        ['userToken', token],
+        ['userId', userId],
+        ['userRole', userRole],
+        ['shopProfileComplete', shopProfileComplete ? 'true' : 'false'],
+      ]);
+
+      console.log('✅ Login success:', { userRole, userId, shopProfileComplete });
+
+      // Navigate based on role and shop setup state
+      if (userRole === 'shopkeeper') {
+        if (shopProfileComplete) {
+          navigation.replace('OwnerDashboard');
+        } else {
+          navigation.replace('ShopSetup');
+        }
+      } else {
+        navigation.replace('MainTabs');
+      }
     } catch (error) {
       let errorMsg = 'Login failed';
       if (error.code === 'auth/user-not-found') {
@@ -101,10 +155,59 @@ export default function LoginScreen({ navigation }) {
         return;
       }
 
-      const googleCredential =
-        auth.GoogleAuthProvider.credential(idToken);
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userCredential = await auth().signInWithCredential(googleCredential);
 
-      await auth().signInWithCredential(googleCredential);
+      // Get Firebase token
+      const token = await userCredential.user.getIdToken();
+      const userId = userCredential.user.uid;
+
+      // Fetch user role and shopProfileComplete from backend (with fallback)
+      let userRole = 'user'; // Default fallback
+      let shopProfileComplete = false;
+
+      try {
+        const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          userRole = userData.role || 'user';
+          shopProfileComplete = !!userData.shopProfileComplete;
+          console.log('✅ User data fetched:', { userRole, shopProfileComplete });
+        } else {
+          console.warn('Backend response not ok:', response.status);
+        }
+      } catch (fetchError) {
+        console.warn('Backend unreachable, using default user role:', fetchError.message);
+        // Continue with default 'user' role and shopProfileComplete = false
+      }
+
+      // Store in AsyncStorage
+      await AsyncStorage.multiSet([
+        ['userToken', token],
+        ['userId', userId],
+        ['userRole', userRole],
+        ['shopProfileComplete', shopProfileComplete ? 'true' : 'false'],
+      ]);
+
+      console.log('✅ Google login success:', { userRole, userId, shopProfileComplete });
+
+      // Navigate based on role and shop setup state
+      if (userRole === 'shopkeeper') {
+        if (shopProfileComplete) {
+          navigation.replace('OwnerDashboard');
+        } else {
+          navigation.replace('ShopSetup');
+        }
+      } else {
+        navigation.replace('MainTabs');
+      }
     } catch (error) {
       if (error.code !== 'CANCELED') {
         Alert.alert('Google login failed', error.message || 'Please try again');
