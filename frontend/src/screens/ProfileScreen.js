@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AccountScreen({ navigation }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -64,13 +65,20 @@ export default function AccountScreen({ navigation }) {
 
   // ✅ LOGOUT HANDLER
   const handleLogout = async () => {
-  try {
-    await auth().signOut();
-    // ❌ navigation.reset REMOVE
-  } catch (e) {
-    console.log(e);
-  }
-};
+    try {
+      // Clear local auth data and sign out
+      await AsyncStorage.multiRemove(['userToken', 'userId', 'userRole', 'shopProfileComplete']);
+      await auth().signOut();
+
+      // Reset navigation to Login (clears history)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 
   return (

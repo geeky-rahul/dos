@@ -1,0 +1,758 @@
+﻿--------- beginning of main
+02-12 15:06:06.728 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:06:06.729 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 15:06:07.980 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:06:07.982 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-12 15:06:08.901 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:06:12.542 29574 30286 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-12 15:06:12.543 29574 30286 I ReactNativeJS: Fetching address from backend...
+02-12 15:08:21.573 29574 30286 I ReactNativeJS: [TypeError: Network request failed]
+02-12 15:08:21.661 29574 30286 E ReactNativeJS: 'Failed to fetch user role:', [TypeError: Network request failed]
+02-12 15:08:23.624 29574 30286 I ReactNativeJS: 'Backend sync error:', [TypeError: Network request failed]
+02-12 15:08:27.721 29574 30286 I ReactNativeJS: 'Backend location error:', 'Network request failed'
+02-12 15:12:33.278 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:12:33.278 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:12:33.278 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:12:41.431 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:12:41.431 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:12:41.431 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:12:47.931 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:12:47.931 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:12:47.931 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:13:01.506 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:13:01.506 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:13:01.506 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:13:24.083 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:13:24.083 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:13:24.083 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:13:44.981 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:13:44.981 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:13:44.981 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:14:01.572 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:14:01.572 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:14:01.572 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:14:21.716 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:14:21.716 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:14:21.716 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:14:29.606 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:14:29.606 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:14:29.606 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:15:27.095 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:15:27.095 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:15:27.095 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:15:59.552 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:15:59.552 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:15:59.552 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:16:34.025 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:16:34.026 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-12 15:18:33.758 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:18:33.758 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 15:18:34.925 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:18:34.928 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-12 15:18:37.400 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:18:38.891 29574 30286 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-12 15:18:38.893 29574 30286 I ReactNativeJS: Fetching address from backend...
+02-12 15:18:40.071 29574 30286 I ReactNativeJS: [TypeError: Network request failed]
+02-12 15:18:57.222 29574 30286 I ReactNativeJS: 'Menu action:', 'language'
+02-12 15:20:49.106 29574 30286 E ReactNativeJS: 'Failed to fetch user role:', [TypeError: Network request failed]
+02-12 15:20:49.108 29574 30286 I ReactNativeJS: [TypeError: Network request failed]
+02-12 15:20:51.156 29574 30286 I ReactNativeJS: 'Backend sync error:', [TypeError: Network request failed]
+02-12 15:20:53.190 29574 30286 I ReactNativeJS: 'Backend location error:', 'Network request failed'
+02-12 15:27:54.690 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:27:54.690 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:27:54.690 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:27:59.874 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:27:59.874 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:27:59.874 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:28:04.102 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:28:04.102 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:28:04.102 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:28:08.295 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:28:08.295 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:28:08.295 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:29:00.252 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:29:00.255 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-12 15:30:29.193 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:30:29.195 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 15:30:30.600 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:30:30.612 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-12 15:30:31.628 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:30:35.352 29574 30286 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-12 15:30:35.353 29574 30286 I ReactNativeJS: Fetching address from backend...
+02-12 15:31:41.775 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:31:41.775 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-12 15:32:10.391 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 15:32:10.392 29574 30286 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signInWithEmailAndPassword`. Please use `signInWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 15:32:11.122 29574 30286 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 15:32:15.389 29574 30286 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-12 15:32:15.389 29574 30286 I ReactNativeJS: Fetching address from backend...
+02-12 15:32:45.905 29574 30286 I ReactNativeJS: 'Backend sync error:', [TypeError: Network request failed]
+02-12 15:32:45.907 29574 30286 I ReactNativeJS: [TypeError: Network request failed]
+02-12 15:32:45.909 29574 30286 E ReactNativeJS: 'Failed to fetch user role:', [TypeError: Network request failed]
+02-12 15:32:50.006 29574 30286 I ReactNativeJS: 'Backend location error:', 'Network request failed'
+02-12 15:34:11.836 29574 30286 E ReactNativeJS: { [Error: TransformError SyntaxError: C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: Missing catch or finally clause. (63:4)
+02-12 15:34:11.836 29574 30286 E ReactNativeJS: 
+02-12 15:34:11.836 29574 30286 E ReactNativeJS: [0m [90m 61 |[39m     [36mif[39m (hasError) [36mreturn[39m[33m;[39m
+02-12 15:34:11.836 29574 30286 E ReactNativeJS:  [90m 62 |[39m
+02-12 15:34:11.836 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 63 |[39m     [36mtry[39m {
+02-12 15:34:11.836 29574 30286 E ReactNativeJS:  [90m    |[39m     [31m[1m^[22m[39m
+02-12 15:34:11.836 29574 30286 E ReactNativeJS:  [90m 64 |[39m       setLoading([36mtrue[39m)[33m;[39m
+02-12 15:34:11.836 29574 30286 E ReactNativeJS:  [90m 65 |[39m       
+02-12 15:34:11.836 29574 30286 E ReactNativeJS:  [90m 66 |[39m       [90m// Firebase login[39m[0m] preventSymbolication: true }
+02-12 15:34:14.229 29574 30286 E ReactNativeJS: { [Error: TransformError SyntaxError: C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: Missing catch or finally clause. (63:4)
+02-12 15:34:14.229 29574 30286 E ReactNativeJS: 
+02-12 15:34:14.229 29574 30286 E ReactNativeJS: [0m [90m 61 |[39m     [36mif[39m (hasError) [36mreturn[39m[33m;[39m
+02-12 15:34:14.229 29574 30286 E ReactNativeJS:  [90m 62 |[39m
+02-12 15:34:14.229 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 63 |[39m     [36mtry[39m {
+02-12 15:34:14.229 29574 30286 E ReactNativeJS:  [90m    |[39m     [31m[1m^[22m[39m
+02-12 15:34:14.229 29574 30286 E ReactNativeJS:  [90m 64 |[39m       setLoading([36mtrue[39m)[33m;[39m
+02-12 15:34:14.229 29574 30286 E ReactNativeJS:  [90m 65 |[39m       
+02-12 15:34:14.229 29574 30286 E ReactNativeJS:  [90m 66 |[39m       [90m// Firebase login[39m[0m] preventSymbolication: true }
+02-12 15:34:18.893 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:18.893 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:18.893 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:34:20.552 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:20.552 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:20.552 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:34:26.257 29574 30286 I ReactNativeJS: [TypeError: Network request failed]
+02-12 15:34:30.588 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:30.588 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:30.588 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:34:33.761 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:33.761 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:33.761 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:34:40.924 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:40.924 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:40.924 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:34:41.850 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:34:41.850 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:34:41.850 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:35:01.072 29574 30286 I ReactNativeJS: 'Backend location error:', 'Network request failed'
+02-12 15:35:01.074 29574 30286 E ReactNativeJS: 'Failed to fetch user role:', [TypeError: Network request failed]
+02-12 15:47:19.520 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:19.520 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:19.520 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:47:20.562 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:20.562 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:20.562 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:47:20.770 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:20.770 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:20.770 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:47:41.303 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:41.303 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:41.303 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:47:44.823 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:44.823 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:44.823 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:47:56.897 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:47:56.897 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:47:56.897 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:48:00.534 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:48:00.534 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:48:00.534 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:51:46.915 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:51:46.915 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:51:46.915 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:52:00.418 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:52:00.418 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:52:00.418 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:52:31.018 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:52:31.018 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:52:31.018 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:23.951 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:23.951 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:23.951 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:24.397 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:24.397 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:24.397 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:24.714 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:24.714 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:24.714 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:25.093 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:25.093 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:25.093 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:25.477 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:25.477 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:25.477 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:25.757 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:25.757 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:25.757 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:25.946 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:25.946 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:25.946 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 15:54:26.111 29574 30286 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-async-storage/async-storage from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\screens\LoginScreen.js: @react-native-async-storage/async-storage could not be found within the project or in these directories:
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:   node_modules
+02-12 15:54:26.111 29574 30286 E ReactNativeJS: [0m [90m 15 |[39m [36mimport[39m [33mIcon[39m [36mfrom[39m [32m'react-native-vector-icons/Ionicons'[39m[33m;[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:  [90m 16 |[39m [36mimport[39m [33mLinearGradient[39m [36mfrom[39m [32m'react-native-linear-gradient'[39m[33m;[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS: [31m[1m>[22m[39m[90m 17 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:  [90m    |[39m                           [31m[1m^[22m[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:  [90m 18 |[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:  [90m 19 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-12 15:54:26.111 29574 30286 E ReactNativeJS:  [90m 20 |[39m [36mimport[39m { [33mGoogleSignin[39m } [36mfrom[39m [32m'@react-native-google-signin/google-signin'[39m[33m;[39m[0m] preventSymbolication: true }
+02-12 16:02:56.728   340   663 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-12 16:02:58.042   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:02:58.701   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-12 16:02:59.597   340   663 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-12 16:04:18.233   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:04:18.234   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 16:04:21.190   340   663 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-12 16:04:22.220   340   663 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 16:04:37.205   340   663 W ReactNativeJS: 'Backend sync warning:', 401
+02-12 16:04:37.244   340   663 I ReactNativeJS: 'Γ£à Registration + Login success:', { userRole: 'shopkeeper',
+02-12 16:04:37.244   340   663 I ReactNativeJS:   userId: 'o3pcvkgx3fRCslIvPQQqlkFJvyZ2' }
+02-12 16:05:41.643   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:05:41.644   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:05:46.806   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:05:46.809   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:05:54.529   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:05:54.535   340   663 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:11:39.734   340   663 W ReactNativeJS: Cannot connect to Metro.
+02-12 16:11:39.734   340   663 W ReactNativeJS: 
+02-12 16:11:39.734   340   663 W ReactNativeJS: Try the following to fix the issue:
+02-12 16:11:39.734   340   663 W ReactNativeJS: - Ensure that Metro is running and available on the same network
+02-12 16:11:39.734   340   663 W ReactNativeJS: - Ensure that your device/emulator is connected to your machine and has USB debugging enabled - run 'adb devices' to see a list of connected devices
+02-12 16:11:39.734   340   663 W ReactNativeJS: - If you're on a physical device connected to the same machine, run 'adb reverse tcp:8081 tcp:8081' to forward requests from your device
+02-12 16:11:39.734   340   663 W ReactNativeJS: - If your device is on the same Wi-Fi network, set 'Debug server host & port for device' in 'Dev settings' to your machine's IP address and the port of the local dev server - e.g. 10.0.1.1:8081
+02-12 16:11:39.734   340   663 W ReactNativeJS: 
+02-12 16:11:39.734   340   663 W ReactNativeJS: URL: 10.0.2.2:8081
+02-12 16:11:39.734   340   663 W ReactNativeJS: 
+02-12 16:11:39.734   340   663 W ReactNativeJS: Error: undefined
+02-12 16:13:18.239   340  1189 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-12 16:13:18.611   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:13:18.630   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-12 16:13:19.130   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:13:19.134   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:13:19.136   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:13:39.071   340  1189 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.
+02-12 16:13:39.079   340  1189 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.
+02-12 16:13:39.122   340  1189 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-12 16:14:09.282   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:14:09.283   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 16:14:20.712   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:14:20.714   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 16:14:22.144   340  1189 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-12 16:14:23.599   340  1189 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 16:14:23.671   340  1189 W ReactNativeJS: 'Backend sync warning:', 401
+02-12 16:14:23.701   340  1189 I ReactNativeJS: 'Γ£à Registration + Login success:', { userRole: 'shopkeeper',
+02-12 16:14:23.701   340  1189 I ReactNativeJS:   userId: 'kahHViJheThHfTfpK0iLWWQ6KeU2' }
+02-12 16:15:00.810   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:15:00.813   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:15:37.677   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:15:37.681   340  1189 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:49.040   340  1345 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-12 16:16:49.408   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:49.425   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:49.870   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:49.876   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:49.881   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.', { [Stack] name: 'Stack' }
+02-12 16:16:58.246   340  1345 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.
+02-12 16:16:58.248   340  1345 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.
+02-12 16:16:58.279   340  1345 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-12 16:17:16.897   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-12 16:17:16.898   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signInWithEmailAndPassword`. Please use `signInWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-12 16:17:17.968   340  1345 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-12 16:17:18.036   340  1345 W ReactNativeJS: 'Backend response not ok:', 401
+02-12 16:17:18.058   340  1345 I ReactNativeJS: 'Γ£à Login success:', { userRole: 'user',
+02-12 16:17:18.058   340  1345 I ReactNativeJS:   userId: 'o3pcvkgx3fRCslIvPQQqlkFJvyZ2',
+02-12 16:17:18.058   340  1345 I ReactNativeJS:   shopProfileComplete: false }
+02-12 16:17:18.072   340  1345 E ReactNativeJS: The action 'REPLACE' with payload {"name":"MainTabs"} was not handled by any navigator.
+02-12 16:17:18.072   340  1345 E ReactNativeJS: 
+02-12 16:17:18.072   340  1345 E ReactNativeJS: Do you have a screen named 'MainTabs'?
+02-12 16:17:18.072   340  1345 E ReactNativeJS: 
+02-12 16:17:18.072   340  1345 E ReactNativeJS: If you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.
+02-12 16:17:18.072   340  1345 E ReactNativeJS: 
+02-12 16:17:18.072   340  1345 E ReactNativeJS: If you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.
+02-12 16:17:18.072   340  1345 E ReactNativeJS: 
+02-12 16:17:18.072   340  1345 E ReactNativeJS: This is a development-only warning and won't be shown in production.
+02-18 21:32:13.680   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:32:13.690   340  1345 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signInWithEmailAndPassword`. Please use `signInWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-18 21:32:13.938   340  1345 W ReactNativeJS: Cannot connect to Metro.
+02-18 21:32:13.938   340  1345 W ReactNativeJS: 
+02-18 21:32:13.938   340  1345 W ReactNativeJS: Try the following to fix the issue:
+02-18 21:32:13.938   340  1345 W ReactNativeJS: - Ensure that Metro is running and available on the same network
+02-18 21:32:13.938   340  1345 W ReactNativeJS: - Ensure that your device/emulator is connected to your machine and has USB debugging enabled - run 'adb devices' to see a list of connected devices
+02-18 21:32:13.938   340  1345 W ReactNativeJS: - If you're on a physical device connected to the same machine, run 'adb reverse tcp:8081 tcp:8081' to forward requests from your device
+02-18 21:32:13.938   340  1345 W ReactNativeJS: - If your device is on the same Wi-Fi network, set 'Debug server host & port for device' in 'Dev settings' to your machine's IP address and the port of the local dev server - e.g. 10.0.1.1:8081
+02-18 21:32:13.938   340  1345 W ReactNativeJS: 
+02-18 21:32:13.938   340  1345 W ReactNativeJS: URL: 10.0.2.2:8081
+02-18 21:32:13.938   340  1345 W ReactNativeJS: 
+02-18 21:32:13.938   340  1345 W ReactNativeJS: Error: undefined
+02-18 21:32:14.768   340  1345 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-18 21:34:28.400   340  1345 W ReactNativeJS: 'Backend unreachable, using default user role:', 'Network request failed'
+02-18 21:34:28.465   340  1345 I ReactNativeJS: 'Γ£à Login success:', { userRole: 'user',
+02-18 21:34:28.465   340  1345 I ReactNativeJS:   userId: 'o3pcvkgx3fRCslIvPQQqlkFJvyZ2',
+02-18 21:34:28.465   340  1345 I ReactNativeJS:   shopProfileComplete: false }
+02-18 21:34:28.481   340  1345 E ReactNativeJS: The action 'REPLACE' with payload {"name":"MainTabs"} was not handled by any navigator.
+02-18 21:34:28.481   340  1345 E ReactNativeJS: 
+02-18 21:34:28.481   340  1345 E ReactNativeJS: Do you have a screen named 'MainTabs'?
+02-18 21:34:28.481   340  1345 E ReactNativeJS: 
+02-18 21:34:28.481   340  1345 E ReactNativeJS: If you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.
+02-18 21:34:28.481   340  1345 E ReactNativeJS: 
+02-18 21:34:28.481   340  1345 E ReactNativeJS: If you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.
+02-18 21:34:28.481   340  1345 E ReactNativeJS: 
+02-18 21:34:28.481   340  1345 E ReactNativeJS: This is a development-only warning and won't be shown in production.
+02-18 21:40:21.844  3358  3415 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-18 21:40:22.708  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:40:23.198  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-18 21:40:28.620  3358  3415 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-18 21:40:28.622  3358  3415 I ReactNativeJS: Fetching address from backend...
+02-18 21:42:37.841  3358  3415 I ReactNativeJS: [TypeError: Network request failed]
+02-18 21:42:41.942  3358  3415 I ReactNativeJS: 'Backend location error:', 'Network request failed'
+02-18 21:43:57.395  3358  3415 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-18 21:45:23.726  3358  3415 I ReactNativeJS: [TypeError: Network request failed]
+02-18 21:49:06.071  3358  3415 E ReactNativeJS: 'Text strings must be rendered within a <Text> component.', { [Stack] name: 'Stack' }
+02-18 21:49:20.747  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:20.751  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:25.811  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:25.812  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:25.825  3358  3415 I ReactNativeJS: [Error: [auth/no-current-user] No user currently signed in.]
+02-18 21:49:30.481  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:30.484  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:30.492  3358  3415 I ReactNativeJS: [Error: [auth/no-current-user] No user currently signed in.]
+02-18 21:49:31.432  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:31.434  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:31.438  3358  3415 I ReactNativeJS: [Error: [auth/no-current-user] No user currently signed in.]
+02-18 21:49:55.544  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:55.546  3358  3415 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.', { [Stack] name: 'Stack' }
+02-18 21:49:55.553  3358  3415 I ReactNativeJS: [Error: [auth/no-current-user] No user currently signed in.]
+02-18 21:50:43.925  3358  3415 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.
+02-18 21:50:43.926  3358  3415 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signOut`. Please use `signOut()` instead.
+02-18 21:50:43.929  3358  3415 I ReactNativeJS: [Error: [auth/no-current-user] No user currently signed in.]
+02-18 21:51:41.531  3962  4039 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-18 21:51:42.265  3962  4039 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:51:42.377  3962  4039 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-18 21:51:43.126  3962  4039 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-18 21:52:17.832  3962  4039 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-18 21:52:17.839  3962  4039 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `signInWithEmailAndPassword`. Please use `signInWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-18 21:52:19.653  3962  4039 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `getIdToken`. Please use `getIdToken()` instead.
+02-18 21:52:34.458  3962  4039 W ReactNativeJS: 'Backend response not ok:', 401
+02-18 21:52:34.492  3962  4039 I ReactNativeJS: 'Γ£à Login success:', { userRole: 'user',
+02-18 21:52:34.492  3962  4039 I ReactNativeJS:   userId: 'o3pcvkgx3fRCslIvPQQqlkFJvyZ2',
+02-18 21:52:34.492  3962  4039 I ReactNativeJS:   shopProfileComplete: false }
+02-18 21:52:35.491  3962  4039 E ReactNativeJS: 'Text strings must be rendered within a <Text> component.', { [Stack] name: 'Stack' }
+02-18 21:52:39.642  3962  4039 I ReactNativeJS: 'GPS Location found:', 37.4219983, -122.084
+02-18 21:52:39.652  3962  4039 I ReactNativeJS: Fetching address from backend...
+02-18 21:52:40.729  3962  4039 I ReactNativeJS: 'Location from backend:', { area: 'Unknown Area', city: 'Mountain View' }
+02-18 21:52:40.730  3962  4039 I ReactNativeJS: 'Formatted location:', 'Unknown Area, Mountain View'
+02-18 21:58:50.831  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:58:50.831  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:58:50.831  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:58:50.831  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:58:50.831  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:58:50.831  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:58:50.831  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:58:50.831  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:05.520  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:05.520  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:05.520  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:05.520  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:05.520  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:05.520  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:05.520  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:05.520  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:10.622  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:10.622  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:10.622  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:10.622  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:10.622  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:10.622  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:10.622  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:10.622  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:22.212  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:22.212  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:22.212  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:22.212  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:22.212  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:22.212  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:22.212  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:22.212  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:24.424  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:24.424  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:24.424  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:24.424  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:24.424  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:24.424  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:24.424  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:24.424  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:46.884  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:46.884  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:46.884  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:46.884  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:46.884  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:46.884  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:46.884  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:46.884  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:48.246  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:48.246  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:48.246  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:48.246  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:48.246  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:48.246  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:48.246  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:48.246  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 21:59:59.320  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 21:59:59.320  3962  4039 E ReactNativeJS:   node_modules
+02-18 21:59:59.320  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 21:59:59.320  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 21:59:59.320  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 21:59:59.320  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 21:59:59.320  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 21:59:59.320  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:00.847  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:00.847  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:00.847  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:00.847  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:00.847  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:00.847  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:00.847  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:00.847  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:14.468  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:14.468  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:14.468  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:14.468  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:14.468  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:14.468  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:14.468  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:14.468  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:17.469  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:17.469  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:17.469  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:17.469  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:17.469  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:17.469  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:17.469  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:17.469  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:26.828  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:26.828  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:26.828  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:26.828  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:26.828  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:26.828  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:26.828  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:26.828  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:28.311  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:28.311  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:28.311  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:28.311  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:28.311  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:28.311  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:28.311  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:28.311  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:00:52.898  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:00:52.898  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:00:52.898  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:00:52.898  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:00:52.898  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:00:52.898  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:00:52.898  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:00:52.898  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:01:12.945  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:01:12.945  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:01:12.945  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:01:12.945  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:01:12.945  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:01:12.945  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:01:12.945  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:01:12.945  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:01:14.116  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:01:14.116  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:01:14.116  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:01:14.116  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:01:14.116  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:01:14.116  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:01:14.116  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:01:14.116  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:01:32.455  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:01:32.455  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:01:32.455  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:01:32.455  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:01:32.455  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:01:32.455  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:01:32.455  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:01:32.455  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:01:35.827  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:01:35.827  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:01:35.827  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:01:35.827  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:01:35.827  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:01:35.827  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:01:35.827  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:01:35.827  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:02:18.403  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:02:18.403  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:02:18.403  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:02:18.403  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:02:18.403  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:02:18.403  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:02:18.403  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:02:18.403  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:02:19.971  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:02:19.971  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:02:19.971  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:02:19.971  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:02:19.971  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:02:19.971  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:02:19.971  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:02:19.971  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:05:53.537  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:05:53.537  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:05:53.537  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:05:53.537  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:05:53.537  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:05:53.537  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:05:53.537  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:05:53.537  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:05:53.954  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:05:53.954  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:05:53.954  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:05:53.954  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:05:53.954  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:05:53.954  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:05:53.954  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:05:53.954  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-18 22:05:54.299  3962  4039 E ReactNativeJS: { [Error: UnableToResolveError Unable to resolve module @react-native-firebase/firestore from C:\Users\ADITYA\OneDrive\Desktop\App\DOS\frontend\src\services\firebase.js: @react-native-firebase/firestore could not be found within the project or in these directories:
+02-18 22:05:54.299  3962  4039 E ReactNativeJS:   node_modules
+02-18 22:05:54.299  3962  4039 E ReactNativeJS: [0m [90m 1 |[39m [36mimport[39m auth [36mfrom[39m [32m'@react-native-firebase/auth'[39m[33m;[39m
+02-18 22:05:54.299  3962  4039 E ReactNativeJS: [31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m firestore [36mfrom[39m [32m'@react-native-firebase/firestore'[39m[33m;[39m
+02-18 22:05:54.299  3962  4039 E ReactNativeJS:  [90m   |[39m                        [31m[1m^[22m[39m
+02-18 22:05:54.299  3962  4039 E ReactNativeJS:  [90m 3 |[39m
+02-18 22:05:54.299  3962  4039 E ReactNativeJS:  [90m 4 |[39m [90m// Users collection: doc id = uid[39m
+02-18 22:05:54.299  3962  4039 E ReactNativeJS:  [90m 5 |[39m [36mconst[39m usersCol [33m=[39m firestore()[33m.[39mcollection([32m'users'[39m)[33m;[39m[0m] preventSymbolication: true }
+02-19 13:09:44.772  7135  7231 I ReactNativeJS: Running "DOS" with {"rootTag":1,"initialProps":{},"fabric":true}
+02-19 13:09:45.849  7135  7231 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-19 13:09:46.066  7135  7231 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `onAuthStateChanged`. Please use `onAuthStateChanged()` instead.', { [Stack] name: 'Stack' }
+02-19 13:09:46.829  7135  7231 W ReactNativeJS: 'SafeAreaView has been deprecated and will be removed in a future release. Please use \'react-native-safe-area-context\' instead. See https://github.com/AppAndFlow/react-native-safe-area-context', { [Stack] name: 'Stack' }
+02-19 13:10:52.443  7135  7231 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.', { [Stack] name: 'Stack' }
+02-19 13:10:52.444  7135  7231 W ReactNativeJS: 'This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `createUserWithEmailAndPassword`. Please use `createUserWithEmailAndPassword()` instead.', { [Stack] name: 'Stack' }
+02-19 13:10:55.014  7135  7231 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `updateProfile`. Please use `updateProfile()` instead.
+02-19 13:10:55.961  7135  7231 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22 Please use `getApp()` instead.
+02-19 13:10:55.965  7135  7231 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `collection`. Please use `collection()` instead.
+02-19 13:10:55.967  7135  7231 W ReactNativeJS: This method is deprecated (as well as all React Native Firebase namespaced API) and will be removed in the next major release as part of move to match Firebase Web modular SDK API. Please see migration guide for more details: https://rnfirebase.io/migrating-to-v22. Method called was `doc`. Please use `doc()` instead.

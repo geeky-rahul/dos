@@ -8,6 +8,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import MainTabs from './MainTabs';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
+import ShopDetailsScreen from '../screens/ShopDetailsScreen';
 import OwnerDashboardScreen from '../screens/OwnerDashboardScreen';
 import AddProductScreen from '../screens/AddProductScreen';
 import ManageProductsScreen from '../screens/ManageProductsScreen';
@@ -74,31 +75,27 @@ export default function AppNavigator() {
     );
   }
 
+  // Register all screens statically and choose initial route based on auth state.
+  // This prevents navigation actions (like `replace('MainTabs')`) from failing
+  // when the target screen hasn't been conditionally registered yet.
+  const initialRoute = state.userToken == null
+    ? 'Login'
+    : (state.userRole === 'owner' ? 'OwnerDashboard' : 'MainTabs');
+
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {state.userToken == null ? (
-        // Auth Stack
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="ShopSetup" component={ShopSetupScreen} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        </>
-      ) : state.userRole === 'shopkeeper' ? (
-        // Owner Stack
-        <>
-          <Stack.Screen name="OwnerDashboard" component={OwnerDashboardScreen} />
-          <Stack.Screen name="ShopSetup" component={ShopSetupScreen} />
-          <Stack.Screen name="AddProduct" component={AddProductScreen} />
-          <Stack.Screen name="ManageProducts" component={ManageProductsScreen} />
-        </>
-      ) : (
-        // User Stack
-        <>
-          <Stack.Screen name="MainTabs" component={MainTabs} />
-          <Stack.Screen name="ShopDetail" component={ShopDetailScreen} />
-        </>
-      )}
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRoute}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="ShopSetup" component={ShopSetupScreen} />
+      <Stack.Screen name="ShopDetails" component={ShopDetailsScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+
+      <Stack.Screen name="OwnerDashboard" component={OwnerDashboardScreen} />
+      <Stack.Screen name="AddProduct" component={AddProductScreen} />
+      <Stack.Screen name="ManageProducts" component={ManageProductsScreen} />
+
+      <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Screen name="ShopDetail" component={ShopDetailScreen} />
     </Stack.Navigator>
   );
 }

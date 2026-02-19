@@ -9,7 +9,6 @@ import {
   Alert,
   Modal,
   TextInput,
-  Switch,
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -49,27 +48,35 @@ export default function OwnerDashboardScreen({ navigation }) {
       const currentUser = auth().currentUser;
       if (!currentUser) return;
 
-      const token = await currentUser.getIdToken();
-      const response = await fetch('http://10.0.2.2:5000/api/shops/my-shop', {
+      const token = await currentUser.getIdToken(true);
+      const response = await fetch('http://10.0.2.2:5000/api/shops/my', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const payload = await response.json();
+        const data = Array.isArray(payload) ? payload[0] : payload;
+        if (!data) {
+          setShopData(null);
+          return;
+        }
+
         setShopData(data);
         setEditFormData({
-          shopName: data.shopName || '',
+          shopName: data.name || data.shopName || '',
           email: data.email || '',
-          phone: data.phone || '',
+          phone: data.contact?.phone || data.phone || '',
           category: data.category || '',
           area: data.area || '',
           city: data.city || '',
         });
-        setOpenTime(data.openTime || '09:00');
-        setCloseTime(data.closeTime || '21:00');
+        setOpenTime(data.openTime || data.openingTime || '09:00');
+        setCloseTime(data.closeTime || data.closingTime || '21:00');
         setIsOpen(data.isOpen !== false);
+      } else {
+        setShopData(null);
       }
     } catch (error) {
       console.error('Error fetching shop data:', error);
@@ -87,7 +94,8 @@ export default function OwnerDashboardScreen({ navigation }) {
   const handleUpdateShopInfo = async () => {
     try {
       const currentUser = auth().currentUser;
-      const token = await currentUser.getIdToken();
+      if (!currentUser) throw new Error('Not authenticated');
+      const token = await currentUser.getIdToken(true);
 
       const response = await fetch('http://10.0.2.2:5000/api/shops/update', {
         method: 'PUT',
@@ -103,7 +111,12 @@ export default function OwnerDashboardScreen({ navigation }) {
         setEditModalVisible(false);
         await fetchShopData();
       } else {
-        Alert.alert('Error', 'Failed to update shop information');
+        let txt = await response.text();
+        try {
+          const json = JSON.parse(txt);
+          txt = json.message || txt;
+        } catch (e) {}
+        Alert.alert('Error', txt || 'Failed to update shop information');
       }
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -113,7 +126,8 @@ export default function OwnerDashboardScreen({ navigation }) {
   const handleUpdateTimings = async () => {
     try {
       const currentUser = auth().currentUser;
-      const token = await currentUser.getIdToken();
+      if (!currentUser) throw new Error('Not authenticated');
+      const token = await currentUser.getIdToken(true);
 
       const response = await fetch('http://10.0.2.2:5000/api/shops/timings', {
         method: 'PUT',
@@ -130,6 +144,13 @@ export default function OwnerDashboardScreen({ navigation }) {
       if (response.ok) {
         Alert.alert('Success', 'Shop timings updated!');
         await fetchShopData();
+      } else {
+        let txt = await response.text();
+        try {
+          const json = JSON.parse(txt);
+          txt = json.message || txt;
+        } catch (e) {}
+        Alert.alert('Error', txt || 'Failed to update timings');
       }
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -139,7 +160,8 @@ export default function OwnerDashboardScreen({ navigation }) {
   const handleToggleShopOpen = async () => {
     try {
       const currentUser = auth().currentUser;
-      const token = await currentUser.getIdToken();
+      if (!currentUser) throw new Error('Not authenticated');
+      const token = await currentUser.getIdToken(true);
 
       const response = await fetch('http://10.0.2.2:5000/api/shops/toggle-open', {
         method: 'PUT',
@@ -154,6 +176,13 @@ export default function OwnerDashboardScreen({ navigation }) {
         setIsOpen(!isOpen);
         Alert.alert('Success', `Shop ${!isOpen ? 'opened' : 'closed'}!`);
         await fetchShopData();
+      } else {
+        let txt = await response.text();
+        try {
+          const json = JSON.parse(txt);
+          txt = json.message || txt;
+        } catch (e) {}
+        Alert.alert('Error', txt || 'Failed to update shop status');
       }
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -168,8 +197,14 @@ export default function OwnerDashboardScreen({ navigation }) {
         style: 'destructive',
         onPress: async () => {
           try {
-            await AsyncStorage.multiRemove(['userToken', 'userId', 'userRole']);
+            await AsyncStorage.multiRemove(['userToken', 'userId', 'userRole', 'shopProfileComplete']);
             await auth().signOut();
+
+            // Ensure navigation returns to Login and clears stack
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
           } catch (error) {
             Alert.alert('Error', 'Failed to logout');
           }
@@ -225,7 +260,7 @@ export default function OwnerDashboardScreen({ navigation }) {
             <View style={styles.statusCard}>
               <View style={styles.statusHeader}>
                 <View>
-                  <Text style={styles.shopName}>{shopData.shopName || 'My Shop'}</Text>
+                  <Text style={styles.shopName}>{shopData.name || shopData.shopName || 'My Shop'}</Text>
                   <Text style={styles.shopCategory}>{shopData.category || 'General'}</Text>
                 </View>
                 <TouchableOpacity
@@ -239,7 +274,7 @@ export default function OwnerDashboardScreen({ navigation }) {
 
               <Text style={styles.shopLocation}>📍 {shopData.area || 'Area'}, {shopData.city || 'City'}</Text>
               <Text style={styles.shopEmail}>✉️ {shopData.email || user?.email}</Text>
-              <Text style={styles.shopPhone}>📱 {shopData.phone || 'N/A'}</Text>
+              <Text style={styles.shopPhone}>📱 {shopData.contact?.phone || shopData.phone || 'N/A'}</Text>
             </View>
 
             {/* ACTION CARDS GRID */}
@@ -267,7 +302,7 @@ export default function OwnerDashboardScreen({ navigation }) {
               {/* Add Product */}
               <TouchableOpacity
                 style={styles.actionCard}
-                onPress={() => navigation.navigate('AddProduct')}
+                onPress={() => navigation.navigate('AddProduct', { shopId: shopData?._id || auth().currentUser?.uid })}
               >
                 <Icon name="add-circle" size={28} color={OWNER_COLORS.primary} />
                 <Text style={styles.actionTitle}>Add Product</Text>
@@ -277,7 +312,7 @@ export default function OwnerDashboardScreen({ navigation }) {
               {/* Manage Products */}
               <TouchableOpacity
                 style={styles.actionCard}
-                onPress={() => navigation.navigate('ManageProducts')}
+                onPress={() => navigation.navigate('ManageProducts', { shopId: shopData?._id || auth().currentUser?.uid })}
               >
                 <Icon name="list" size={28} color={OWNER_COLORS.primary} />
                 <Text style={styles.actionTitle}>Manage Products</Text>
@@ -307,6 +342,12 @@ export default function OwnerDashboardScreen({ navigation }) {
             <Icon name="storefront" size={64} color={OWNER_COLORS.primary} />
             <Text style={styles.noDataTitle}>No Shop Setup</Text>
             <Text style={styles.noDataText}>Create your shop profile to start</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.saveButton, { marginTop: 16, minWidth: 180 }]}
+              onPress={() => navigation.navigate('ShopSetup')}
+            >
+              <Text style={styles.buttonText}>Setup Shop</Text>
+            </TouchableOpacity>
           </View>
         )}
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLORS } from '../constants/colors';
 
 export default function ShopSetupScreen({ navigation }) {
@@ -24,22 +23,43 @@ export default function ShopSetupScreen({ navigation }) {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const getFreshIdToken = async () => {
+    let user = auth().currentUser;
+    if (!user) {
+      user = await new Promise((resolve) => {
+        const timer = setTimeout(() => {
+          unsubscribe();
+          resolve(null);
+        }, 5000);
+        const unsubscribe = auth().onAuthStateChanged((currentUser) => {
+          clearTimeout(timer);
+          unsubscribe();
+          resolve(currentUser);
+        });
+      });
+    }
+
+    if (!user) {
+      throw new Error('Not authenticated. Please log in again.');
+    }
+
+    return user.getIdToken(true);
+  };
+
   const handleSubmit = async () => {
     if (!shopName.trim()) return Alert.alert('Validation', 'Shop name is required');
+    if (!address.trim()) return Alert.alert('Validation', 'Address is required');
     setLoading(true);
     try {
-      const currentUser = auth().currentUser;
-      let token = null;
-      if (currentUser) {
-        // force refresh token to avoid using a stale/expired token
-        token = await currentUser.getIdToken(true);
-        console.log('Refreshed Firebase token');
-      } else {
-        // fallback to AsyncStorage token if auth state isn't populated yet
-        token = await AsyncStorage.getItem('userToken');
-        console.log('Using token from AsyncStorage');
-      }
+      const token = await getFreshIdToken();
       if (!token) throw new Error('Not authenticated');
+
+      const addressParts = address
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const area = addressParts.length >= 3 ? addressParts[addressParts.length - 3] : addressParts[0] || 'General';
+      const city = addressParts.length >= 2 ? addressParts[addressParts.length - 2] : addressParts[addressParts.length - 1] || 'Unknown';
 
       const body = {
         name: shopName.trim(),
@@ -51,8 +71,8 @@ export default function ShopSetupScreen({ navigation }) {
         notice: description.trim(),
         openTime,
         closeTime,
-        area: address.split(',').slice(-3, -2)[0] || '',
-        city: address.split(',').slice(-2, -1)[0] || '',
+        area,
+        city,
       };
 
       console.log('Creating shop with body:', body);

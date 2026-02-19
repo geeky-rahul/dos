@@ -15,7 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth } from '../services/firebase';
+import { auth, createUserDoc } from '../services/firebase';
 import { COLORS } from '../constants/colors';
 
 export default function RegisterScreen({ navigation }) {
@@ -27,7 +27,7 @@ export default function RegisterScreen({ navigation }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [role, setRole] = useState('user'); // 'user' or 'shopkeeper'
+  const [role, setRole] = useState('user'); // 'user' or 'owner'
   
   // Shop owner specific fields
   // removed shop-specific fields from register screen; owners complete on ShopSetup
@@ -76,73 +76,55 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       setLoading(true);
+        console.log('Register: starting', { email: email.trim(), role });
 
-      const userCredential =
-        await auth().createUserWithEmailAndPassword(email.trim(), password);
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email.trim(),
+        password
+      );
+        console.log('Register: created userCredential', userCredential && userCredential.user && userCredential.user.uid);
 
       // Save name in Firebase profile
-      await userCredential.user.updateProfile({
-        displayName: name.trim(),
-      });
+      await userCredential.user.updateProfile({ displayName: name.trim() });
 
-      // Save role to backend (with fallback)
+      const userId = userCredential.user.uid;
+
+      // Create user doc in Firestore with role, but don't let this hang indefinitely
+      console.log('Register: creating user doc', { userId });
+      const createDocPromise = createUserDoc(userId, email.trim(), role === 'owner' ? 'owner' : 'user');
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('createUserDoc timeout')), 10000),
+      );
       try {
-        const token = await userCredential.user.getIdToken();
-        const userId = userCredential.user.uid;
-        let userRole = role; // Use selected role
-        
-        try {
-          const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ role }),
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            userRole = userData.role || role;
-            console.log('✅ Backend role sync success:', userRole);
-          } else {
-            console.warn('Backend sync warning:', response.status);
-          }
-        } catch (fetchError) {
-          console.warn('Backend unreachable, using selected role:', fetchError.message);
-          // Continue with selected role
-        }
-
-        // Store in AsyncStorage (auto-login after registration)
-        await AsyncStorage.multiSet([
-          ['userToken', token],
-          ['userId', userId],
-          ['userRole', userRole],
-        ]);
-        
-        console.log('✅ Registration + Login success:', { userRole, userId });
-      } catch (error) {
-        throw error;
+        await Promise.race([createDocPromise, timeout]);
+        console.log('Register: user doc created');
+      } catch (e) {
+        console.warn('Register: createUserDoc failed or timed out, continuing', e.message);
       }
 
-      Alert.alert(
-        'Success',
-        `Account created successfully as ${role === 'shopkeeper' ? 'Shop Owner' : 'Regular User'}!`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              // Navigate based on role
-              if (role === 'shopkeeper') {
-                navigation.replace('ShopSetup');
+      // Store minimal session info locally
+      const token = await userCredential.user.getIdToken();
+      await AsyncStorage.multiSet([
+        ['userToken', token],
+        ['userId', userId],
+        ['userRole', role === 'owner' ? 'owner' : 'user'],
+      ]);
+
+      Alert.alert('Success', `Account created successfully!`, [
+        {
+          text: 'OK',
+          onPress: () => {
+              if (role === 'owner') {
+                // Owner: go to ShopSetup to complete shop profile
+                navigation.replace('ShopSetup', { uid: userId });
               } else {
-                navigation.replace('MainTabs');
-              }
-            },
+              navigation.replace('MainTabs');
+            }
           },
-        ]
-      );
+        },
+      ]);
     } catch (error) {
+      console.error('Register: error', error);
       let errorMsg = error.message;
       if (error.code === 'auth/email-already-in-use') {
         errorMsg = 'This email is already registered';
@@ -313,24 +295,24 @@ export default function RegisterScreen({ navigation }) {
 
                 <TouchableOpacity
                   style={[
-                    styles.roleButton,
-                    role === 'shopkeeper' && styles.roleButtonActive,
-                  ]}
-                  onPress={() => {
-                    setRole('shopkeeper');
-                    setErrors({});
-                  }}
+                      styles.roleButton,
+                      role === 'owner' && styles.roleButtonActive,
+                    ]}
+                    onPress={() => {
+                      setRole('owner');
+                      setErrors({});
+                    }}
                   disabled={loading}
                 >
                   <Icon
-                    name="storefront"
-                    size={20}
-                    color={role === 'shopkeeper' ? '#FFF' : COLORS.primary}
+                      name="storefront"
+                      size={20}
+                      color={role === 'owner' ? '#FFF' : COLORS.primary}
                   />
                   <Text
                     style={[
                       styles.roleButtonText,
-                      role === 'shopkeeper' && styles.roleButtonTextActive,
+                        role === 'owner' && styles.roleButtonTextActive,
                     ]}
                   >
                     Shop Owner

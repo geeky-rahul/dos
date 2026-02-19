@@ -7,9 +7,8 @@ import {
   FlatList,
   Alert,
   ActivityIndicator,
-  Animated,
 } from 'react-native';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
@@ -27,14 +26,12 @@ export default function ManageProductsScreen({ route, navigation }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(
-        `http://10.0.2.2:5000/api/products/shop/${shopId}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setProducts(data);
+      const response = await fetch(`http://10.0.2.2:5000/api/products/shop/${shopId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
       }
+      const data = await response.json();
+      setProducts(data);
     } catch (error) {
       console.error('Error fetching products:', error);
       Alert.alert('Error', 'Failed to load products');
@@ -52,24 +49,22 @@ export default function ManageProductsScreen({ route, navigation }) {
   const handleToggleOffer = async (productId, currentStatus) => {
     try {
       const currentUser = auth().currentUser;
-      const token = await currentUser.getIdToken();
+      if (!currentUser) throw new Error('Not authenticated');
+      const token = await currentUser.getIdToken(true);
 
-      const response = await fetch(
-        `http://10.0.2.2:5000/api/products/${productId}/offer`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ isOnOffer: !currentStatus }),
-        }
-      );
-
-      if (response.ok) {
-        fetchProducts();
-        Alert.alert('Success', `Offer ${!currentStatus ? 'enabled' : 'disabled'}`);
+      const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}/offer`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ isOnOffer: !currentStatus }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to toggle offer');
       }
+      fetchProducts();
+      Alert.alert('Success', `Offer ${!currentStatus ? 'enabled' : 'disabled'}`);
     } catch (error) {
       console.error('Error toggling offer:', error);
       Alert.alert('Error', 'Failed to update offer');
@@ -83,23 +78,19 @@ export default function ManageProductsScreen({ route, navigation }) {
         text: 'Delete',
         onPress: async () => {
           try {
-            const currentUser = auth().currentUser;
-            const token = await currentUser.getIdToken();
-
-            const response = await fetch(
-              `http://10.0.2.2:5000/api/products/${productId}`,
-              {
+              const currentUser = auth().currentUser;
+              if (!currentUser) throw new Error('Not authenticated');
+              const token = await currentUser.getIdToken(true);
+              const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}`, {
                 method: 'DELETE',
                 headers: {
-                  'Authorization': `Bearer ${token}`,
+                  Authorization: `Bearer ${token}`,
                 },
-              }
-            );
+              });
+              if (!response.ok) throw new Error('Failed to delete product');
 
-            if (response.ok) {
               fetchProducts();
               Alert.alert('Success', 'Product deleted');
-            }
           } catch (error) {
             console.error('Error deleting product:', error);
             Alert.alert('Error', 'Failed to delete product');
@@ -109,32 +100,9 @@ export default function ManageProductsScreen({ route, navigation }) {
     ]);
   };
 
-  const renderProduct = ({ item, index }) => {
-    const animValue = useRef(new Animated.Value(0)).current;
-
-    useEffect(() => {
-      Animated.timing(animValue, {
-        toValue: 1,
-        duration: 400,
-        delay: index * 100,
-        useNativeDriver: true,
-      }).start();
-    }, []);
-
+  const renderProduct = ({ item }) => {
     return (
-      <Animated.View
-        style={{
-          opacity: animValue,
-          transform: [
-            {
-              translateY: animValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [20, 0],
-              }),
-            },
-          ],
-        }}
-      >
+      <View>
         <View style={styles.productCard}>
           <View style={styles.productInfo}>
             <View style={styles.productNameRow}>
@@ -182,7 +150,7 @@ export default function ManageProductsScreen({ route, navigation }) {
 
             <TouchableOpacity
               style={styles.editBtn}
-              onPress={() => navigation.navigate('EditProduct', { productId: item._id })}
+              onPress={() => navigation.navigate('AddProduct', { shopId, product: item })}
             >
               <Icon name="pencil" size={16} color={COLORS.text} />
             </TouchableOpacity>
@@ -195,7 +163,7 @@ export default function ManageProductsScreen({ route, navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      </Animated.View>
+      </View>
     );
   };
 

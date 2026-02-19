@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import auth from '@react-native-firebase/auth';
+import { getUserDoc } from '../services/firebase';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { COLORS } from '../constants/colors';
 
@@ -73,30 +74,25 @@ export default function LoginScreen({ navigation }) {
       const token = await userCredential.user.getIdToken();
       const userId = userCredential.user.uid;
 
-      // Fetch user role and shopProfileComplete from backend (with fallback)
-      let userRole = 'user'; // Default fallback
+      // Fetch user role and shopProfileComplete from Firestore users/shops
+      let userRole = 'user';
       let shopProfileComplete = false;
-
       try {
-        const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
-          userRole = userData.role || 'user';
-          shopProfileComplete = !!userData.shopProfileComplete;
-          console.log('✅ User data fetched:', { userRole, shopProfileComplete });
-        } else {
-          console.warn('Backend response not ok:', response.status);
+        const userDoc = await getUserDoc(userId);
+        if (userDoc) {
+          userRole = userDoc.role || 'user';
         }
-      } catch (fetchError) {
-        console.warn('Backend unreachable, using default user role:', fetchError.message);
-        // Continue with default 'user' role and shopProfileComplete = false
+
+        // Check if shop doc exists for owner
+        if (userRole === 'owner') {
+          // lazy check of shops collection presence
+          // We'll rely on ShopDetails flow to set shopProfileComplete when owner fills shop
+          // For now, assume false and let other flows handle redirect
+          shopProfileComplete = false;
+        }
+        console.log('✅ User data fetched:', { userRole, shopProfileComplete });
+      } catch (err) {
+        console.warn('Error fetching user doc:', err.message);
       }
 
       // Store in AsyncStorage
@@ -110,7 +106,7 @@ export default function LoginScreen({ navigation }) {
       console.log('✅ Login success:', { userRole, userId, shopProfileComplete });
 
       // Navigate based on role and shop setup state
-      if (userRole === 'shopkeeper') {
+      if (userRole === 'owner') {
         if (shopProfileComplete) {
           navigation.replace('OwnerDashboard');
         } else {
@@ -162,30 +158,17 @@ export default function LoginScreen({ navigation }) {
       const token = await userCredential.user.getIdToken();
       const userId = userCredential.user.uid;
 
-      // Fetch user role and shopProfileComplete from backend (with fallback)
+      // Fetch user role from Firestore
       let userRole = 'user'; // Default fallback
       let shopProfileComplete = false;
-
       try {
-        const response = await fetch('http://10.0.2.2:5000/api/auth/me', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
-          userRole = userData.role || 'user';
-          shopProfileComplete = !!userData.shopProfileComplete;
-          console.log('✅ User data fetched:', { userRole, shopProfileComplete });
-        } else {
-          console.warn('Backend response not ok:', response.status);
+        const userDoc = await getUserDoc(userId);
+        if (userDoc) {
+          userRole = userDoc.role || 'user';
         }
+        console.log('✅ User data fetched (google):', { userRole });
       } catch (fetchError) {
-        console.warn('Backend unreachable, using default user role:', fetchError.message);
-        // Continue with default 'user' role and shopProfileComplete = false
+        console.warn('Error fetching user doc:', fetchError.message);
       }
 
       // Store in AsyncStorage
@@ -199,7 +182,7 @@ export default function LoginScreen({ navigation }) {
       console.log('✅ Google login success:', { userRole, userId, shopProfileComplete });
 
       // Navigate based on role and shop setup state
-      if (userRole === 'shopkeeper') {
+      if (userRole === 'owner') {
         if (shopProfileComplete) {
           navigation.replace('OwnerDashboard');
         } else {

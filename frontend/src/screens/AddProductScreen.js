@@ -16,15 +16,16 @@ import auth from '@react-native-firebase/auth';
 import { COLORS } from '../constants/colors';
 
 export default function AddProductScreen({ route, navigation }) {
-  const { shopId } = route.params;
+  const { shopId, product } = route.params || {};
+  const isEditMode = !!product?._id;
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    offerPrice: '',
-    description: '',
-    category: 'General',
+    name: product?.name || '',
+    price: product?.price ? String(product.price) : '',
+    offerPrice: product?.offerPrice ? String(product.offerPrice) : '',
+    description: product?.description || '',
+    category: product?.category || 'General',
   });
 
   const handleAddProduct = async () => {
@@ -42,43 +43,57 @@ export default function AddProductScreen({ route, navigation }) {
     setLoading(true);
     try {
       const currentUser = auth().currentUser;
-      const token = await currentUser.getIdToken();
-
-      const response = await fetch(
-        `http://10.0.2.2:5000/api/products/shop/${shopId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            price: parseFloat(formData.price),
-            offerPrice: formData.offerPrice ? parseFloat(formData.offerPrice) : null,
-            description: formData.description,
-            category: formData.category,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        Alert.alert('Success', 'Product added successfully', [
-          {
-            text: 'OK',
-            onPress: () => {
-              setFormData({ name: '', price: '', offerPrice: '', description: '', category: 'General' });
-              navigation.goBack();
-            },
-          },
-        ]);
-      } else {
-        const error = await response.json();
-        Alert.alert('Error', error.message || 'Failed to add product');
+      if (!currentUser) {
+        throw new Error('Not authenticated');
       }
+      const token = await currentUser.getIdToken(true);
+      if (!isEditMode && !shopId) {
+        throw new Error('Shop not found. Please setup shop first.');
+      }
+
+      const payload = {
+        name: formData.name.trim(),
+        price: parseFloat(formData.price),
+        offerPrice: formData.offerPrice ? parseFloat(formData.offerPrice) : undefined,
+        description: formData.description.trim(),
+        category: formData.category || 'General',
+      };
+
+      const url = isEditMode
+        ? `http://10.0.2.2:5000/api/products/${product._id}`
+        : `http://10.0.2.2:5000/api/products/shop/${shopId}`;
+      const method = isEditMode ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        let txt = await response.text();
+        try {
+          const json = JSON.parse(txt);
+          txt = json.message || txt;
+        } catch (e) {}
+        throw new Error(txt || `Failed to ${isEditMode ? 'update' : 'add'} product`);
+      }
+
+      Alert.alert('Success', isEditMode ? 'Product updated successfully' : 'Product added successfully', [
+        {
+          text: 'OK',
+          onPress: () => {
+            setFormData({ name: '', price: '', offerPrice: '', description: '', category: 'General' });
+            navigation.goBack();
+          },
+        },
+      ]);
     } catch (error) {
       console.error('Error adding product:', error);
-      Alert.alert('Error', 'Network error. Please try again.');
+      Alert.alert('Error', error.message || `Failed to ${isEditMode ? 'update' : 'add'} product.`);
     } finally {
       setLoading(false);
     }
@@ -93,7 +108,7 @@ export default function AddProductScreen({ route, navigation }) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={28} color={COLORS.primary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add Product</Text>
+        <Text style={styles.headerTitle}>{isEditMode ? 'Edit Product' : 'Add Product'}</Text>
         <View style={{ width: 28 }} />
       </View>
 
@@ -190,7 +205,7 @@ export default function AddProductScreen({ route, navigation }) {
           {loading ? (
             <ActivityIndicator color="#FFF" />
           ) : (
-            <Text style={styles.submitBtnText}>Add Product</Text>
+            <Text style={styles.submitBtnText}>{isEditMode ? 'Save Product' : 'Add Product'}</Text>
           )}
         </TouchableOpacity>
       </ScrollView>

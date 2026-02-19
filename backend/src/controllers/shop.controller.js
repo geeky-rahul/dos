@@ -18,9 +18,39 @@ export const createShop = async (req, res) => {
       return res.status(403).json({ message: "Subscription expired. Please renew." });
     }
 
+    const rawAddress =
+      req.body?.contact?.address || req.body?.address || "";
+    const addressParts = String(rawAddress)
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const normalizedArea =
+      (req.body?.area || "").trim() ||
+      (addressParts.length >= 3
+        ? addressParts[addressParts.length - 3]
+        : addressParts[0] || "General");
+
+    const normalizedCity =
+      (req.body?.city || "").trim() ||
+      (addressParts.length >= 2
+        ? addressParts[addressParts.length - 2]
+        : addressParts[addressParts.length - 1] || "Unknown");
+
+    const normalizedName = (req.body?.name || "").trim();
+    if (!normalizedName) {
+      return res.status(400).json({ message: "Shop name is required" });
+    }
+
     const shopData = {
       ownerId: req.user._id,
       ...req.body,
+      name: normalizedName,
+      area: normalizedArea,
+      city: normalizedCity,
+      openTime: req.body?.openTime || "09:00",
+      closeTime: req.body?.closeTime || "21:00",
+      isOpen: typeof req.body?.isOpen === "boolean" ? req.body.isOpen : true,
     };
 
     // Optional: if frontend sends lat/lng
@@ -42,7 +72,119 @@ export const createShop = async (req, res) => {
     res.status(201).json(shop);
   } catch (err) {
     console.error("createShop error", err);
+    if (err?.name === "ValidationError") {
+      const details = Object.values(err.errors || {})
+        .map((e) => e.message)
+        .filter(Boolean)
+        .join(", ");
+      return res.status(400).json({
+        message: details || "Invalid shop details",
+      });
+    }
     res.status(500).json({ message: "Failed to create shop" });
+  }
+};
+
+/**
+ * UPDATE LOGGED-IN OWNER SHOP DETAILS
+ */
+export const updateMyShop = async (req, res) => {
+  try {
+    const shop = await Shop.findOne({ ownerId: req.user._id });
+    if (!shop) {
+      return res.status(404).json({ message: "Shop not found" });
+    }
+
+    const updates = {};
+    if (typeof req.body.shopName === "string" || typeof req.body.name === "string") {
+      updates.name = (req.body.shopName || req.body.name || "").trim();
+    }
+    if (typeof req.body.category === "string") {
+      updates.category = req.body.category.trim() || "General";
+    }
+    if (typeof req.body.area === "string") {
+      updates.area = req.body.area.trim() || shop.area;
+    }
+    if (typeof req.body.city === "string") {
+      updates.city = req.body.city.trim() || shop.city;
+    }
+    if (typeof req.body.phone === "string") {
+      updates.contact = {
+        ...(shop.contact || {}),
+        phone: req.body.phone.trim(),
+      };
+    }
+
+    if (!updates.name) {
+      updates.name = shop.name;
+    }
+
+    await Shop.findByIdAndUpdate(shop._id, updates, { runValidators: true });
+    const updated = await Shop.findById(shop._id);
+    return res.json(updated);
+  } catch (err) {
+    console.error("updateMyShop error", err);
+    if (err?.name === "ValidationError") {
+      const details = Object.values(err.errors || {})
+        .map((e) => e.message)
+        .filter(Boolean)
+        .join(", ");
+      return res.status(400).json({ message: details || "Invalid shop details" });
+    }
+    return res.status(500).json({ message: "Failed to update shop" });
+  }
+};
+
+/**
+ * UPDATE SHOP TIMINGS (OWNER)
+ */
+export const updateMyShopTimings = async (req, res) => {
+  try {
+    const { openTime, closeTime } = req.body;
+    if (!openTime || !closeTime) {
+      return res.status(400).json({ message: "openTime and closeTime are required" });
+    }
+
+    const shop = await Shop.findOneAndUpdate(
+      { ownerId: req.user._id },
+      { openTime, closeTime },
+      { new: true, runValidators: true },
+    );
+
+    if (!shop) {
+      return res.status(404).json({ message: "Shop not found" });
+    }
+
+    return res.json(shop);
+  } catch (err) {
+    console.error("updateMyShopTimings error", err);
+    return res.status(500).json({ message: "Failed to update timings" });
+  }
+};
+
+/**
+ * TOGGLE SHOP OPEN/CLOSED (OWNER)
+ */
+export const toggleMyShopOpen = async (req, res) => {
+  try {
+    if (typeof req.body?.isOpen !== "boolean") {
+      return res.status(400).json({ message: "isOpen must be boolean" });
+    }
+
+    const shop = await Shop.findOneAndUpdate(
+      { ownerId: req.user._id },
+      { isOpen: req.body.isOpen },
+      { new: true },
+    );
+
+    if (!shop) {
+      return res.status(404).json({ message: "Shop not found" });
+    }
+
+    return res.json(shop);
+  } catch (err) {
+    console.error("toggleMyShopOpen error", err);
+    return res.status(500).json({ message: "Failed to update shop status" });
   }
 };
 

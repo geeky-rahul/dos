@@ -74,12 +74,12 @@ export const updateProduct = async (req, res) => {
     }
 
     // Update fields
-    if (name) product.name = name;
-    if (price) product.price = price;
-    if (offerPrice) product.offerPrice = offerPrice;
+    if (typeof name !== "undefined") product.name = name;
+    if (typeof price !== "undefined") product.price = price;
+    if (typeof offerPrice !== "undefined") product.offerPrice = offerPrice;
     if (typeof isOnOffer !== 'undefined') product.isOnOffer = isOnOffer;
-    if (description) product.description = description;
-    if (category) product.category = category;
+    if (typeof description !== "undefined") product.description = description;
+    if (typeof category !== "undefined") product.category = category;
     if (typeof inStock !== 'undefined') product.inStock = inStock;
 
     await product.save();
