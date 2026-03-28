@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 import { getUserDoc } from '../services/firebase';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { COLORS } from '../constants/colors';
+import { API_BASE_URL } from '../constants/api';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -33,6 +34,76 @@ export default function LoginScreen({ navigation }) {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const resolveRoleAndShopStatus = async (userId, token) => {
+    let userRole = 'user';
+    let shopProfileComplete = false;
+
+    try {
+      const userDoc = await getUserDoc(userId);
+      if (userDoc?.role) {
+        userRole = userDoc.role;
+      }
+    } catch (err) {
+      console.warn('Error fetching user doc:', err.message);
+    }
+
+    if (userRole === 'shopkeeper') {
+      userRole = 'owner';
+    }
+
+    try {
+      const meResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ role: userRole }),
+      });
+
+      if (meResponse.ok) {
+        const me = await meResponse.json();
+        userRole = me?.role === 'shopkeeper' ? 'owner' : (me?.role || userRole);
+        shopProfileComplete = !!me?.shopProfileComplete;
+      }
+    } catch (err) {
+      console.warn('Error fetching backend user profile:', err.message);
+    }
+
+    if (userRole === 'owner' && !shopProfileComplete) {
+      try {
+        const shopsResponse = await fetch(`${API_BASE_URL}/api/shops/my`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (shopsResponse.ok) {
+          const shops = await shopsResponse.json();
+          shopProfileComplete = Array.isArray(shops) && shops.length > 0;
+        }
+      } catch (err) {
+        console.warn('Error checking owner shops:', err.message);
+      }
+    }
+
+    return { userRole, shopProfileComplete };
+  };
+
+  const completeLogin = async (userId, token) => {
+    const { userRole, shopProfileComplete } = await resolveRoleAndShopStatus(userId, token);
+
+    await AsyncStorage.multiSet([
+      ['userToken', token],
+      ['userId', userId],
+      ['userRole', userRole],
+      ['shopProfileComplete', shopProfileComplete ? 'true' : 'false'],
+    ]);
+
+    if (userRole === 'owner') {
+      navigation.replace(shopProfileComplete ? 'OwnerDashboard' : 'ShopSetup');
+    } else {
+      navigation.replace('MainTabs');
+    }
   };
 
   /* ================= EMAIL LOGIN ================= */
@@ -74,47 +145,7 @@ export default function LoginScreen({ navigation }) {
       const token = await userCredential.user.getIdToken();
       const userId = userCredential.user.uid;
 
-      // Fetch user role and shopProfileComplete from Firestore users/shops
-      let userRole = 'user';
-      let shopProfileComplete = false;
-      try {
-        const userDoc = await getUserDoc(userId);
-        if (userDoc) {
-          userRole = userDoc.role || 'user';
-        }
-
-        // Check if shop doc exists for owner
-        if (userRole === 'owner') {
-          // lazy check of shops collection presence
-          // We'll rely on ShopDetails flow to set shopProfileComplete when owner fills shop
-          // For now, assume false and let other flows handle redirect
-          shopProfileComplete = false;
-        }
-        console.log('✅ User data fetched:', { userRole, shopProfileComplete });
-      } catch (err) {
-        console.warn('Error fetching user doc:', err.message);
-      }
-
-      // Store in AsyncStorage
-      await AsyncStorage.multiSet([
-        ['userToken', token],
-        ['userId', userId],
-        ['userRole', userRole],
-        ['shopProfileComplete', shopProfileComplete ? 'true' : 'false'],
-      ]);
-
-      console.log('✅ Login success:', { userRole, userId, shopProfileComplete });
-
-      // Navigate based on role and shop setup state
-      if (userRole === 'owner') {
-        if (shopProfileComplete) {
-          navigation.replace('OwnerDashboard');
-        } else {
-          navigation.replace('ShopSetup');
-        }
-      } else {
-        navigation.replace('MainTabs');
-      }
+      await completeLogin(userId, token);
     } catch (error) {
       let errorMsg = 'Login failed';
       if (error.code === 'auth/user-not-found') {
@@ -158,39 +189,7 @@ export default function LoginScreen({ navigation }) {
       const token = await userCredential.user.getIdToken();
       const userId = userCredential.user.uid;
 
-      // Fetch user role from Firestore
-      let userRole = 'user'; // Default fallback
-      let shopProfileComplete = false;
-      try {
-        const userDoc = await getUserDoc(userId);
-        if (userDoc) {
-          userRole = userDoc.role || 'user';
-        }
-        console.log('✅ User data fetched (google):', { userRole });
-      } catch (fetchError) {
-        console.warn('Error fetching user doc:', fetchError.message);
-      }
-
-      // Store in AsyncStorage
-      await AsyncStorage.multiSet([
-        ['userToken', token],
-        ['userId', userId],
-        ['userRole', userRole],
-        ['shopProfileComplete', shopProfileComplete ? 'true' : 'false'],
-      ]);
-
-      console.log('✅ Google login success:', { userRole, userId, shopProfileComplete });
-
-      // Navigate based on role and shop setup state
-      if (userRole === 'owner') {
-        if (shopProfileComplete) {
-          navigation.replace('OwnerDashboard');
-        } else {
-          navigation.replace('ShopSetup');
-        }
-      } else {
-        navigation.replace('MainTabs');
-      }
+      await completeLogin(userId, token);
     } catch (error) {
       if (error.code !== 'CANCELED') {
         Alert.alert('Google login failed', error.message || 'Please try again');

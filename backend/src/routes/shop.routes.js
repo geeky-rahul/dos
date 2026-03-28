@@ -4,7 +4,6 @@ import {
   createShop,
   getMyShops,
   getAllShops,
-  seedShops,
   getNearbyShops,
   getShopById,
   updateMyShop,
@@ -16,7 +15,6 @@ const router = express.Router();
 
 router.get("/", getAllShops);
 router.get("/nearby", getNearbyShops);
-router.get("/seed", seedShops);
 
 router.post("/", firebaseAuth, createShop);
 router.get("/my", firebaseAuth, getMyShops);

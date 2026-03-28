@@ -14,11 +14,13 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import Geolocation from 'react-native-geolocation-service';
+import { API_BASE_URL } from '../constants/api';
 
 const { width } = Dimensions.get('window');
 
@@ -165,6 +167,12 @@ export default function HomeScreen({ navigation }) {
     ]).start();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchShops();
+    }, [])
+  );
+
     // 🔥 LOCATION FUNCTION WITH REVERSE GEOCODING
   const getCurrentLocation = async () => {
     try {
@@ -213,7 +221,7 @@ export default function HomeScreen({ navigation }) {
             try {
               console.log('Fetching address from backend...');
               const response = await fetch(
-                `http://10.0.2.2:5000/api/location/reverse?lat=${latitude}&lng=${longitude}`
+                `${API_BASE_URL}/api/location/reverse?lat=${latitude}&lng=${longitude}`
               );
               
               if (response.ok) {
@@ -259,9 +267,9 @@ export default function HomeScreen({ navigation }) {
     }
   };
   
-  const fetchShops = async () => {
+  const fetchShops = useCallback(async () => {
     try {
-      const res = await fetch('http://10.0.2.2:5000/api/shops');
+      const res = await fetch(`${API_BASE_URL}/api/shops`);
       const data = await res.json();
       setShops(data.shops || []);
     } catch (e) {
@@ -270,7 +278,7 @@ export default function HomeScreen({ navigation }) {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, []);
 
   const onRefresh = () => {
     setRefreshing(true);

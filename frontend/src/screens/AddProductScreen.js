@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import { COLORS } from '../constants/colors';
+import { API_BASE_URL } from '../constants/api';
 
 export default function AddProductScreen({ route, navigation }) {
   const { shopId, product } = route.params || {};
@@ -60,8 +61,8 @@ export default function AddProductScreen({ route, navigation }) {
       };
 
       const url = isEditMode
-        ? `http://10.0.2.2:5000/api/products/${product._id}`
-        : `http://10.0.2.2:5000/api/products/shop/${shopId}`;
+        ? `${API_BASE_URL}/api/products/${product._id}`
+        : `${API_BASE_URL}/api/products/shop/${shopId}`;
       const method = isEditMode ? 'PUT' : 'POST';
 
       const response = await fetch(url, {

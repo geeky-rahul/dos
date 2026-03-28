@@ -1,20 +1,32 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 import PlayScreen from '../screens/PlayScreen';
 import DealsScreen from '../screens/DealsScreen';
 import { COLORS } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
+const AccountStack = createNativeStackNavigator();
 
 const TabIcon = ({ name, focused }) => (
   <View style={{ alignItems: 'center' }}>
     <Icon name={focused ? name : `${name}-outline`} size={22} color={focused ? COLORS.primary : COLORS.textMuted} />
   </View>
 );
+
+function AccountStackNavigator() {
+  return (
+    <AccountStack.Navigator screenOptions={{ headerShown: false }}>
+      <AccountStack.Screen name="Profile" component={ProfileScreen} />
+      <AccountStack.Screen name="EditProfile" component={EditProfileScreen} />
+    </AccountStack.Navigator>
+  );
+}
 
 export default function MainTabs() {
   return (
@@ -48,7 +60,7 @@ export default function MainTabs() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Play" component={PlayScreen} />
       <Tab.Screen name="Deals" component={DealsScreen} />
-      <Tab.Screen name="Account" component={ProfileScreen} />
+      <Tab.Screen name="Account" component={AccountStackNavigator} />
     </Tab.Navigator>
   );
 }

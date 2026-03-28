@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,25 +8,87 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-
-import { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { syncUserWithBackend } from '../services/authService';
+import { CommonActions } from '@react-navigation/native';
 
 export default function AccountScreen({ navigation }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+  const [userData, setUserData] = useState({
+    name: 'Loading...',
+    email: '',
+    phone: '',
+  });
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadUserData();
+    }, [])
+  );
+
+  const loadUserData = async () => {
+    try {
+      // Try to get data from backend first
+      const backendData = await syncUserWithBackend();
+      if (backendData) {
+        setUserData({
+          name: backendData.name || 'User',
+          email: backendData.email || '',
+          phone: backendData.phone || '',
+        });
+        return;
+      }
+
+      // Try cached data as a fallback
+      const cachedData = await AsyncStorage.getItem('userData');
+      if (cachedData) {
+        const parsed = JSON.parse(cachedData);
+        setUserData({
+          name: parsed.name || 'User',
+          email: parsed.email || '',
+          phone: parsed.phone || '',
+        });
+        return;
+      }
+
+      // Fallback to Firebase auth data
+      const user = auth().currentUser;
+      if (user) {
+        setUserData({
+          name: user.displayName || 'User',
+          email: user.email || '',
+          phone: '',
+        });
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+      const user = auth().currentUser;
+      if (user) {
+        setUserData({
+          name: user.displayName || 'User',
+          email: user.email || '',
+          phone: '',
+        });
+      }
+    }
+  };
 
   const menuItems = [
     {
       section: 'Account',
       items: [
-        { icon: 'person', label: 'Edit Profile', action: 'editProfile' },
-        { icon: 'location', label: 'Saved Addresses', action: 'addresses' },
-        { icon: 'heart', label: 'Favorite Shops', action: 'favorites', badge: '12' },
+        { icon: 'heart', label: 'Favorite Shops', action: 'favorites', badge: '5' },
+        { icon: 'search', label: 'Recent Searches', action: 'searches' },
       ],
     },
     {
@@ -52,15 +115,40 @@ export default function AccountScreen({ navigation }) {
       section: 'Support',
       items: [
         { icon: 'help-circle', label: 'Help & Support', action: 'help' },
-        { icon: 'star', label: 'Rate Us', action: 'rate' },
-        { icon: 'mail', label: 'Feedback', action: 'feedback' },
         { icon: 'information-circle', label: 'About', action: 'about', subtitle: 'Version 1.0.0' },
       ],
     },
   ];
 
   const handleMenuPress = (action) => {
-    console.log('Menu action:', action);
+    switch (action) {
+      case 'editProfile':
+        navigation.navigate('EditProfile');
+        break;
+      case 'favorites':
+        // TODO: Navigate to favorites screen
+        break;
+      case 'searches':
+        // TODO: Navigate to recent searches screen
+        break;
+      case 'language':
+        // TODO: Navigate to language screen
+        break;
+      case 'help':
+        // TODO: Navigate to help screen
+        break;
+      case 'rate':
+        // TODO: Navigate to rate app
+        break;
+      case 'feedback':
+        // TODO: Navigate to feedback screen
+        break;
+      case 'about':
+        // TODO: Navigate to about screen
+        break;
+      default:
+        console.log('Menu action:', action);
+    }
   };
 
   // ✅ LOGOUT HANDLER
@@ -102,14 +190,10 @@ export default function AccountScreen({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* PROFILE CARD */}
         <View style={styles.profileCard}>
-          <View style={styles.avatarContainer}>
-            <Icon name="person" size={40} color={COLORS.primary} />
-          </View>
-
           <View style={styles.profileInfo}>
-            <Text style={styles.userName}>Rahul Gupta</Text>
-            <Text style={styles.userEmail}>rahul@example.com</Text>
-            <Text style={styles.userPhone}>+91 98765 43210</Text>
+            <Text style={styles.userName}>{userData.name}</Text>
+            <Text style={styles.userEmail}>{userData.email}</Text>
+            <Text style={styles.userPhone}>{userData.phone}</Text>
           </View>
 
           <TouchableOpacity
@@ -118,22 +202,6 @@ export default function AccountScreen({ navigation }) {
           >
             <Icon name="pencil" size={18} color={COLORS.primary} />
           </TouchableOpacity>
-        </View>
-
-        {/* STATS */}
-        <View style={styles.statsContainer}>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>24</Text>
-            <Text style={styles.statLabel}>Shops Visited</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>12</Text>
-            <Text style={styles.statLabel}>Favorites</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>156</Text>
-            <Text style={styles.statLabel}>Products Viewed</Text>
-          </View>
         </View>
 
         {/* MENU */}
@@ -323,42 +391,6 @@ const styles = StyleSheet.create({
 
   editIcon: {
     fontSize: 18,
-  },
-
-  /* STATS */
-  statsContainer: {
-    flexDirection: 'row',
-    marginHorizontal: 16,
-    marginTop: 16,
-    gap: 10,
-  },
-
-  statCard: {
-    flex: 1,
-    backgroundColor: COLORS.surface,
-    borderRadius: 12,
-    padding: 14,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-
-  statValue: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: COLORS.primary,
-    marginBottom: 4,
-  },
-
-  statLabel: {
-    fontSize: 11,
-    color: COLORS.textSecondary,
-    textAlign: 'center',
   },
 
   /* MENU SECTIONS */

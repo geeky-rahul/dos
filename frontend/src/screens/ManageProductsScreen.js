@@ -8,25 +8,30 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import { COLORS } from '../constants/colors';
+import { API_BASE_URL } from '../constants/api';
 
 export default function ManageProductsScreen({ route, navigation }) {
-  const { shopId } = route.params;
+  const shopId = route?.params?.shopId;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch(`http://10.0.2.2:5000/api/products/shop/${shopId}`);
+      if (!shopId) {
+        setProducts([]);
+        return;
+      }
+      const response = await fetch(`${API_BASE_URL}/api/products/shop/${shopId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch products');
       }
@@ -39,7 +44,7 @@ export default function ManageProductsScreen({ route, navigation }) {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [shopId]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -52,7 +57,7 @@ export default function ManageProductsScreen({ route, navigation }) {
       if (!currentUser) throw new Error('Not authenticated');
       const token = await currentUser.getIdToken(true);
 
-      const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}/offer`, {
+      const response = await fetch(`${API_BASE_URL}/api/products/${productId}/offer`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +86,7 @@ export default function ManageProductsScreen({ route, navigation }) {
               const currentUser = auth().currentUser;
               if (!currentUser) throw new Error('Not authenticated');
               const token = await currentUser.getIdToken(true);
-              const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}`, {
+              const response = await fetch(`${API_BASE_URL}/api/products/${productId}`, {
                 method: 'DELETE',
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -170,9 +175,9 @@ export default function ManageProductsScreen({ route, navigation }) {
   const EmptyComponent = () => (
     <View style={styles.emptyContainer}>
       <Icon name="cube-outline" size={64} color={COLORS.textMuted} />
-      <Text style={styles.emptyTitle}>No Products Yet</Text>
+      <Text style={styles.emptyTitle}>{shopId ? 'No Products Yet' : 'Shop Not Found'}</Text>
       <Text style={styles.emptyText}>
-        Add products to your shop to get started
+        {shopId ? 'Add products to your shop to get started' : 'Create or load a shop before managing products'}
       </Text>
     </View>
   );

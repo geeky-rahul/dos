@@ -1,5 +1,33 @@
 import Shop from "../models/Shop.js";
+import Product from "../models/Product.js";
 import User from "../models/user.js";
+
+const attachProductsToShops = async (shops) => {
+  if (!Array.isArray(shops) || shops.length === 0) {
+    return shops || [];
+  }
+
+  const shopIds = shops.map((shop) => shop._id);
+  const products = await Product.find({ shopId: { $in: shopIds } })
+    .sort({ createdAt: -1 })
+    .lean();
+
+  const productsByShop = new Map();
+  for (const product of products) {
+    const key = String(product.shopId);
+    if (!productsByShop.has(key)) {
+      productsByShop.set(key, []);
+    }
+    productsByShop.get(key).push(product);
+  }
+
+  return shops.map((shop) => ({
+    ...shop,
+    products:
+      productsByShop.get(String(shop._id)) ||
+      (Array.isArray(shop.products) ? shop.products : []),
+  }));
+};
 
 /**
  * CREATE SHOP (Owner only)
@@ -42,12 +70,29 @@ export const createShop = async (req, res) => {
       return res.status(400).json({ message: "Shop name is required" });
     }
 
+    const normalizedMapUrl =
+      typeof req.body?.mapUrl === "string" ? req.body.mapUrl.trim() : "";
+    const parsedOffer = parseInt(req.body?.offer, 10);
+    const normalizedOffer =
+      !isNaN(parsedOffer) && parsedOffer >= 0 && parsedOffer <= 100
+        ? parsedOffer
+        : 0;
+    const parsedRating = parseFloat(req.body?.rating);
+    const normalizedRating =
+      !isNaN(parsedRating) && parsedRating >= 1 && parsedRating <= 5
+        ? parsedRating.toFixed(1)
+        : "4.0";
+
     const shopData = {
       ownerId: req.user._id,
       ...req.body,
       name: normalizedName,
       area: normalizedArea,
       city: normalizedCity,
+      rating: normalizedRating,
+      offer: normalizedOffer,
+      mapUrl: normalizedMapUrl || undefined,
+      notice: typeof req.body?.notice === "string" ? req.body.notice.trim() : "",
       openTime: req.body?.openTime || "09:00",
       closeTime: req.body?.closeTime || "21:00",
       isOpen: typeof req.body?.isOpen === "boolean" ? req.body.isOpen : true,
@@ -113,6 +158,30 @@ export const updateMyShop = async (req, res) => {
         ...(shop.contact || {}),
         phone: req.body.phone.trim(),
       };
+    }
+    if (typeof req.body.address === "string") {
+      updates.contact = {
+        ...(updates.contact || shop.contact || {}),
+        address: req.body.address.trim(),
+      };
+    }
+    if (typeof req.body.rating === "string") {
+      const rating = parseFloat(req.body.rating);
+      if (!isNaN(rating) && rating >= 1 && rating <= 5) {
+        updates.rating = req.body.rating;
+      }
+    }
+    if (typeof req.body.offer === "string" || typeof req.body.offer === "number") {
+      const offer = parseInt(req.body.offer);
+      if (!isNaN(offer) && offer >= 0 && offer <= 100) {
+        updates.offer = offer;
+      }
+    }
+    if (typeof req.body.mapUrl === "string") {
+      updates.mapUrl = req.body.mapUrl.trim() || null;
+    }
+    if (typeof req.body.notice === "string") {
+      updates.notice = req.body.notice.trim();
     }
 
     if (!updates.name) {
@@ -193,8 +262,9 @@ export const toggleMyShopOpen = async (req, res) => {
  */
 export const getMyShops = async (req, res) => {
   try {
-    const shops = await Shop.find({ ownerId: req.user._id });
-    res.json(shops);
+    const shops = await Shop.find({ ownerId: req.user._id }).lean();
+    const shopsWithProducts = await attachProductsToShops(shops);
+    res.json(shopsWithProducts);
   } catch (err) {
     console.error("getMyShops error", err);
     res.status(500).json({ message: "Failed to fetch your shops" });
@@ -217,8 +287,9 @@ export const getAllShops = async (req, res) => {
         { city: { $regex: q, $options: "i" } },
       ];
 
-    const shops = await Shop.find(filter).limit(200);
-    return res.json({ shops });
+    const shops = await Shop.find(filter).limit(200).lean();
+    const shopsWithProducts = await attachProductsToShops(shops);
+    return res.json({ shops: shopsWithProducts });
   } catch (err) {
     console.error("getAllShops error", err);
     return res.status(500).json({ message: "Failed to fetch shops" });
@@ -262,64 +333,15 @@ export const getShopById = async (req, res) => {
   try {
     const { shopId } = req.params;
 
-    const shop = await Shop.findById(shopId);
+    const shop = await Shop.findById(shopId).lean();
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
     }
 
-    res.json(shop);
+    const [shopWithProducts] = await attachProductsToShops([shop]);
+    res.json(shopWithProducts);
   } catch (err) {
     console.error("getShopById error", err);
     res.status(500).json({ message: "Failed to fetch shop" });
-  }
-};
-
-/**
- * DEV HELPER: SEED SHOPS
- */
-export const seedShops = async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    return res.status(403).json({ message: "Not allowed in production" });
-  }
-
-  try {
-    const count = await Shop.countDocuments();
-    if (count > 0) {
-      const shops = await Shop.find().limit(10);
-      return res.json({ shops });
-    }
-
-    const sample = [
-      {
-        name: "Corner Grocery",
-        area: "Sector 15",
-        city: "Faridabad",
-        category: "Food",
-        offer: 10,
-        rating: "4.6",
-        mapUrl: "https://maps.google.com",
-        location: {
-          type: "Point",
-          coordinates: [77.3178, 28.4089],
-        },
-      },
-      {
-        name: "Stationery Hub",
-        area: "Old Faridabad",
-        city: "Faridabad",
-        category: "Books",
-        rating: "4.2",
-        location: {
-          type: "Point",
-          coordinates: [77.3055, 28.3900],
-        },
-      },
-    ];
-
-    const created = await Shop.insertMany(sample);
-    return res.json({ shops: created });
-  } catch (err) {
-    console.error("seedShops error", err);
-    return res.status(500).json({ message: "Seed failed" });
   }
 };

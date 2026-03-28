@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  View,
   Text,
   TextInput,
   TouchableOpacity,
@@ -12,16 +11,24 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { COLORS } from '../constants/colors';
+import { API_BASE_URL } from '../constants/api';
 
 export default function ShopSetupScreen({ navigation }) {
+  console.log('ShopSetupScreen: Component initialized');
+
   const [shopName, setShopName] = useState('');
   const [category, setCategory] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [mapUrl, setMapUrl] = useState('');
+  const [rating, setRating] = useState('4.0');
+  const [offer, setOffer] = useState('0');
   const [openTime, setOpenTime] = useState('09:00');
   const [closeTime, setCloseTime] = useState('21:00');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
+
+  console.log('ShopSetupScreen: State initialized');
 
   const getFreshIdToken = async () => {
     let user = auth().currentUser;
@@ -47,13 +54,30 @@ export default function ShopSetupScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    if (!shopName.trim()) return Alert.alert('Validation', 'Shop name is required');
-    if (!address.trim()) return Alert.alert('Validation', 'Address is required');
-    setLoading(true);
     try {
-      const token = await getFreshIdToken();
-      if (!token) throw new Error('Not authenticated');
+      // Validation
+      if (!shopName.trim()) {
+        Alert.alert('Validation Error', 'Shop name is required');
+        return;
+      }
+      if (!address.trim()) {
+        Alert.alert('Validation Error', 'Address is required');
+        return;
+      }
 
+      console.log('Starting shop creation...');
+      setLoading(true);
+
+      // Get authentication token
+      console.log('Getting auth token...');
+      const token = await getFreshIdToken();
+      if (!token) {
+        Alert.alert('Authentication Error', 'Please log in again');
+        return;
+      }
+      console.log('Auth token obtained');
+
+      // Prepare data
       const addressParts = address
         .split(',')
         .map((s) => s.trim())
@@ -64,6 +88,9 @@ export default function ShopSetupScreen({ navigation }) {
       const body = {
         name: shopName.trim(),
         category: category.trim() || 'General',
+        rating: rating.trim() || '4.0',
+        offer: offer.trim() || '0',
+        mapUrl: mapUrl.trim(),
         contact: {
           phone: phone.trim(),
           address: address.trim(),
@@ -76,32 +103,55 @@ export default function ShopSetupScreen({ navigation }) {
       };
 
       console.log('Creating shop with body:', body);
-      const res = await fetch('http://10.0.2.2:5000/api/shops', {
+      console.log('API URL:', `${API_BASE_URL}/api/shops`);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      // Make API call
+      const res = await fetch(`${API_BASE_URL}/api/shops`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(body),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
+
+      console.log('API Response status:', res.status);
 
       if (!res.ok) {
-        let txt = await res.text();
-        console.warn('Shop create failed, server response:', txt);
+        let errorText = await res.text();
+        console.error('API Error response:', errorText);
         try {
-          const json = JSON.parse(txt);
-          txt = json.message || JSON.stringify(json);
+          const errorJson = JSON.parse(errorText);
+          errorText = errorJson.message || errorText;
         } catch (e) {
-          // keep original text
+          // Keep original text
         }
-        throw new Error(txt || 'Failed to create shop');
+        throw new Error(errorText || `HTTP ${res.status}: ${res.statusText}`);
       }
 
       const created = await res.json();
-      // Navigate to OwnerDashboard
-      navigation.replace('OwnerDashboard');
+      console.log('Shop created successfully:', created);
+
+      // Navigate to dashboard
+      Alert.alert('Success', 'Shop created successfully!', [
+        { text: 'OK', onPress: () => navigation.replace('OwnerDashboard') }
+      ]);
+
     } catch (err) {
-      Alert.alert('Error', err.message || 'Failed to create shop');
+      console.error('Shop creation error:', err);
+      if (err.name === 'AbortError') {
+        Alert.alert(
+          'Connection Error',
+          `Could not reach the backend server.\n\nCurrent API: ${API_BASE_URL}\n\nMake sure the backend is running and your phone/emulator can access your computer on port 5000.`
+        );
+      } else {
+        Alert.alert('Error', err.message || 'Failed to create shop. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -124,6 +174,34 @@ export default function ShopSetupScreen({ navigation }) {
         <Text style={styles.label}>Address</Text>
         <TextInput style={styles.input} value={address} onChangeText={setAddress} placeholder="Street, Area, City" />
 
+        <Text style={styles.label}>Map Link</Text>
+        <TextInput
+          style={styles.input}
+          value={mapUrl}
+          onChangeText={setMapUrl}
+          placeholder="Google Maps link"
+          keyboardType="url"
+          autoCapitalize="none"
+        />
+
+        <Text style={styles.label}>Rating</Text>
+        <TextInput
+          style={styles.input}
+          value={rating}
+          onChangeText={setRating}
+          placeholder="4.0"
+          keyboardType="decimal-pad"
+        />
+
+        <Text style={styles.label}>Offer Percentage</Text>
+        <TextInput
+          style={styles.input}
+          value={offer}
+          onChangeText={setOffer}
+          placeholder="0"
+          keyboardType="numeric"
+        />
+
         <Text style={styles.label}>Open Time</Text>
         <TextInput style={styles.input} value={openTime} onChangeText={setOpenTime} placeholder="09:00" />
 
@@ -131,7 +209,7 @@ export default function ShopSetupScreen({ navigation }) {
         <TextInput style={styles.input} value={closeTime} onChangeText={setCloseTime} placeholder="21:00" />
 
         <Text style={styles.label}>Description</Text>
-        <TextInput style={[styles.input, {height:100}]} value={description} onChangeText={setDescription} placeholder="Short description" multiline />
+        <TextInput style={[styles.input, styles.descriptionInput]} value={description} onChangeText={setDescription} placeholder="Short description" multiline />
 
         <TouchableOpacity style={styles.uploadBtn} onPress={() => Alert.alert('Upload','This is a dummy upload button')}>
           <Text style={styles.uploadText}>Upload Image (dummy)</Text>
@@ -152,6 +230,7 @@ const styles = StyleSheet.create({
   title: { fontSize:22, fontWeight:'700', marginBottom:16, color: COLORS.primary },
   label: { fontSize:13, fontWeight:'600', marginTop:12, marginBottom:6 },
   input: { backgroundColor:'#fff', borderRadius:8, padding:12, borderWidth:1, borderColor:'#EAEAEA' },
+  descriptionInput: { height:100, textAlignVertical:'top' },
   uploadBtn: { backgroundColor: COLORS.surface, padding:12, borderRadius:8, marginTop:12, alignItems:'center' },
   uploadText: { color: COLORS.primary, fontWeight:'700' },
   submitBtn: { backgroundColor: COLORS.primary, padding:14, borderRadius:8, marginTop:18, alignItems:'center' },

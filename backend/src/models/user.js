@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'shopkeeper'],
+      enum: ['user', 'owner', 'shopkeeper'],
       default: 'user',
     },
     // Subscription fields for shopkeepers

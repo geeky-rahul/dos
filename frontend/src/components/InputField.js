@@ -1,7 +1,18 @@
 import { View, TextInput, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function InputField({ placeholder, secureTextEntry, value, onChangeText, keyboardType = 'default', icon = null }) {
+export default function InputField({
+  placeholder,
+  secureTextEntry,
+  value,
+  onChangeText,
+  keyboardType = 'default',
+  icon = null,
+  editable = true,
+  autoCapitalize = 'none',
+  autoCorrect = false,
+  ...otherProps
+}) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.inputContainer}>
@@ -13,7 +24,11 @@ export default function InputField({ placeholder, secureTextEntry, value, onChan
           value={value}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
+          editable={editable}
+          autoCapitalize={autoCapitalize}
+          autoCorrect={autoCorrect}
           placeholderTextColor="#9CA3AF"
+          {...otherProps}
         />
       </View>
     </View>

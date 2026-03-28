@@ -1,9 +1,17 @@
+import admin from "../config/firebase.js";
 import User from "../models/user.js";
+
+const normalizeRole = (role) => {
+  if (role === 'shopkeeper') {
+    return 'owner';
+  }
+  return role === 'owner' ? 'owner' : 'user';
+};
 
 export const syncUser = async (req, res) => {
   try {
     const { uid, email, name, picture } = req.user;
-    const { role } = req.body;
+    const requestedRole = normalizeRole(req.body?.role);
 
     // Find user by Firebase UID
     let user = await User.findOne({ uid }).select('+role');
@@ -15,15 +23,15 @@ export const syncUser = async (req, res) => {
         email,
         name,
         photo: picture,
-        role: role || 'user',
+        role: requestedRole || 'user',
         subscriptionExpiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       });
-      console.log('New user created with role:', role || 'user');
-    } else if (role && role !== user.role) {
+      console.log('New user created with role:', requestedRole || 'user');
+    } else if (requestedRole && requestedRole !== normalizeRole(user.role)) {
       // Update role if provided and different
-      user.role = role;
+      user.role = requestedRole;
       await user.save();
-      console.log('User role updated to:', role);
+      console.log('User role updated to:', requestedRole);
     }
 
     // Return user data with token info
@@ -34,7 +42,8 @@ export const syncUser = async (req, res) => {
       uid: userResponse.uid,
       email: userResponse.email,
       name: userResponse.name,
-      role: userResponse.role,
+      phone: userResponse.phone || '',
+      role: normalizeRole(userResponse.role),
       photo: userResponse.photo,
       shopProfileComplete: userResponse.shopProfileComplete || false,
     });
@@ -59,11 +68,63 @@ export const getUserDebug = async (req, res) => {
       uid: user.uid,
       email: user.email,
       name: user.name,
-      role: user.role,
+      role: normalizeRole(user.role),
       createdAt: user.createdAt,
     });
   } catch (error) {
     console.error("getUserDebug error:", error);
     res.status(500).json({ message: "Debug check failed", error: error.message });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { uid } = req.user;
+    const { name, email, phone } = req.body;
+
+    // Only update provided fields
+    const updateData = {};
+    if (typeof name === 'string') updateData.name = name.trim();
+    if (typeof email === 'string') updateData.email = email.trim();
+    if (typeof phone === 'string') updateData.phone = phone.trim();
+
+    const user = await User.findOne({ uid });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // If email is being updated, update Firebase Auth user as well
+    if (typeof email === 'string' && email.trim() && email.trim() !== user.email) {
+      try {
+        await admin.auth().updateUser(uid, { email: email.trim() });
+      } catch (firebaseErr) {
+        console.warn('Failed to update Firebase Auth email:', firebaseErr.message);
+      }
+    }
+
+    // Update Mongo DB fields
+    const updatedUser = await User.findOneAndUpdate(
+      { uid },
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      _id: user._id,
+      uid: user.uid,
+      email: user.email,
+      name: user.name,
+      phone: user.phone,
+      role: normalizeRole(user.role),
+      photo: user.photo,
+      shopProfileComplete: user.shopProfileComplete,
+    });
+  } catch (error) {
+    console.error("updateProfile error:", error);
+    res.status(500).json({ message: "Profile update failed", error: error.message });
   }
 };

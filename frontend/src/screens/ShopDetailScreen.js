@@ -9,6 +9,7 @@ import {
   ScrollView,
   Animated,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 
 import { useEffect, useRef, useState } from 'react';
@@ -16,12 +17,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { COLORS } from '../constants/colors';
+import { API_BASE_URL } from '../constants/api';
 
 const { width } = Dimensions.get('window');
 
 export default function ShopDetailScreen({ route, navigation }) {
   const { shop } = route.params;
   const [activeTab, setActiveTab] = useState('All');
+  const [products, setProducts] = useState(shop?.products || []);
+  const [productsLoading, setProductsLoading] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
 
@@ -40,6 +44,32 @@ export default function ShopDetailScreen({ route, navigation }) {
     ]).start();
   }, []);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!shop?._id) {
+        setProducts([]);
+        setProductsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/products/shop/${shop._id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.log('ShopDetail fetchProducts error:', error?.message || error);
+        setProducts(Array.isArray(shop?.products) ? shop.products : []);
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [shop?._id]);
+
   const openMaps = () => {
     if (shop.mapUrl) {
       Linking.openURL(shop.mapUrl);
@@ -56,23 +86,13 @@ export default function ShopDetailScreen({ route, navigation }) {
   const categories = ['All'];
   
   // Filter products by category with safety checks
-  const allProducts = shop.products || [];
+  const allProducts = products;
   const filteredProducts = activeTab === 'All' 
     ? allProducts
     : allProducts.filter(p => p.category === activeTab);
 
   // Product Card Component
-  const ProductCard = ({ item, index }) => {
-    const productAnim = useRef(new Animated.Value(0)).current;
-
-    useEffect(() => {
-      Animated.timing(productAnim, {
-        toValue: 1,
-        duration: 400,
-        delay: index * 80,
-        useNativeDriver: true,
-      }).start();
-    }, []);
+  const ProductCard = ({ item }) => {
 
     const hasDiscount = item.originalPrice && item.price < item.originalPrice;
     const discountPercent = hasDiscount
@@ -80,19 +100,7 @@ export default function ShopDetailScreen({ route, navigation }) {
       : 0;
 
     return (
-      <Animated.View
-        style={{
-          opacity: productAnim,
-          transform: [
-            {
-              translateY: productAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [30, 0],
-              }),
-            },
-          ],
-        }}
-      >
+      <View>
         <View style={styles.productCard}>
           {/* Product Image */}
           <View style={styles.productImage}>
@@ -152,7 +160,7 @@ export default function ShopDetailScreen({ route, navigation }) {
             )}
           </View>
         </View>
-      </Animated.View>
+      </View>
     );
   };
 
@@ -314,9 +322,13 @@ export default function ShopDetailScreen({ route, navigation }) {
             </Text>
           </View>
 
-          {filteredProducts.length > 0 ? (
+          {productsLoading ? (
+            <View style={styles.emptyProducts}>
+              <ActivityIndicator size="small" color={COLORS.primary} />
+            </View>
+          ) : filteredProducts.length > 0 ? (
             filteredProducts.map((item, index) => (
-              <ProductCard key={item._id || index} item={item} index={index} />
+              <ProductCard key={item._id || index} item={item} />
             ))
           ) : (
             <View style={styles.emptyProducts}>
